@@ -1,0 +1,38 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/dorandoran?serverTimezone=Asia/Seoul
+    username: doran
+    password: doran1234
+
+  jpa:
+    hibernate:
+      ddl-auto: update #create update none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: 2with13@sookmyung.ac.kr
+    password: qxxlpggwagqyewid
+    properties:
+      mail:
+        smtp:
+          auth: true
+          timeout: 5000
+          starttls:
+            enable: true
+
+jwt:
+  secret: azZRiO9wAOh9VGlR/alfWbDh7RB2C864agQtCaI2rQs=
