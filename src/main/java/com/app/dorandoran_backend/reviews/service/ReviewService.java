@@ -1,0 +1,71 @@
+package com.app.dorandoran_backend.reviews.service;
+
+import com.app.dorandoran_backend.mypage.Entity.Members;
+import com.app.dorandoran_backend.reviews.Entity.ReviewComment;
+import com.app.dorandoran_backend.reviews.Entity.ReviewPost;
+import com.app.dorandoran_backend.reviews.dto.ReviewCommentDto;
+import com.app.dorandoran_backend.reviews.dto.ReviewDto;
+import com.app.dorandoran_backend.reviews.repository.ReviewCommentRepository;
+import com.app.dorandoran_backend.reviews.repository.ReviewPostRepository;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class ReviewService {
+
+    private final ReviewPostRepository reviewPostRepository;
+    private final ReviewCommentRepository reviewCommentRepository;
+
+    public ReviewDto getReviewById(Long reviewId) {
+        ReviewPost review = reviewPostRepository.findById(reviewId)
+                .orElseThrow(() -> new RuntimeException("리뷰를 찾을 수 없습니다."));
+        return ReviewDto.from(review);
+    }
+
+    public List<ReviewDto> getReviewList(String sort, int page, int size) {
+        Sort sortOption = switch (sort) {
+            case "rating" -> Sort.by(Sort.Direction.DESC, "rating");
+            default -> Sort.by(Sort.Direction.DESC, "createdAt");
+        };
+        Pageable pageable = PageRequest.of(page - 1, size, sortOption);
+        return reviewPostRepository.findAll(pageable)
+                .stream().map(ReviewDto::from).toList();
+    }
+
+    public Page<ReviewCommentDto> getComments(Long reviewId, int page, int size) {
+        ReviewPost review = reviewPostRepository.findById(reviewId)
+                .orElseThrow(() -> new RuntimeException("리뷰를 찾을 수 없습니다."));
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by(Sort.Direction.DESC, "createdAt"));
+        return reviewCommentRepository.findAllByReview(review, pageable)
+                .map(ReviewCommentDto::from);
+    }
+
+    @Transactional
+    public Long createComment(Members member, Long reviewId, String content) {
+        ReviewPost review = reviewPostRepository.findById(reviewId)
+                .orElseThrow(() -> new RuntimeException("리뷰를 찾을 수 없습니다."));
+
+        ReviewComment comment = ReviewComment.builder()
+                .review(review)
+                .member(member)
+                .content(content)
+                .createdAt(LocalDateTime.now())
+                .build();
+        reviewCommentRepository.save(comment);
+
+        review.setCommentCount(review.getCommentCount() + 1);
+        reviewPostRepository.save(review);
+
+        return comment.getId();
+    }
+}
+
