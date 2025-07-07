@@ -61,7 +61,7 @@ public class JwtTokenProvider {
 
         // RefreshToken 생성
         String refreshToken = Jwts.builder()
-                .setSubject(authentication.getName())  // subject 추가 (이메일)
+                .setSubject(authentication.getName())  // subject 추가 (providerId)
                 .setExpiration(new Date(now + 1000 * 60 * 60 * 24 * 7)) // 7일 유효
                 .signWith(key, SignatureAlgorithm.HS256) // 서명 알고리즘
                 .compact();
@@ -88,10 +88,10 @@ public class JwtTokenProvider {
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
 
-        // 토큰의 subject(email)로 회원 정보 조회
-        String email = claims.getSubject();
-        Members member = memberRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("해당 이메일의 사용자가 존재하지 않습니다."));
+        // 토큰의 providerId로 회원 정보 조회
+        String providerId = claims.getSubject();
+        Members member = memberRepository.findByProviderId(providerId)
+                .orElseThrow(() -> new RuntimeException("해당 사용자가 존재하지 않습니다."));
 
         // PrincipalDetails로 래핑
         PrincipalDetails principalDetails = new PrincipalDetails(member, claims);
@@ -140,11 +140,11 @@ public class JwtTokenProvider {
 
         // 2. refreshToken에서 사용자 정보(이메일) 추출
         Claims claims = parseClaims(refreshToken);
-        String email = claims.getSubject();
+        String providerId = claims.getSubject();
 
         // 3. DB에서 회원 조회
-        log.info("refreshToken subject(email): {}", claims.getSubject());
-        Members member = memberRepository.findByEmail(email)
+        log.info("refreshToken subject(providerId): {}", claims.getSubject());
+        Members member = memberRepository.findByProviderId(providerId)
                 .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
 
         // 4. 권한 정보가 Members에 없으므로 기본 권한 부여
@@ -155,7 +155,7 @@ public class JwtTokenProvider {
         Date accessTokenExpiresIn = new Date(now + 1000 * 60 * 15); // 15분 유효
 
         String newAccessToken = Jwts.builder()
-                .setSubject(email)
+                .setSubject(providerId)
                 .claim("auth", authorities)
                 .setExpiration(accessTokenExpiresIn)
                 .signWith(key, SignatureAlgorithm.HS256)
