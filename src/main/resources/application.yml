@@ -12,7 +12,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/dorandoran?serverTimezone=Asia/Seoul
     username: doran
-    password: ${DB_PASSWORD}
+    password: doran1234
 
   jpa:
     hibernate:
@@ -25,4 +25,4 @@ spring:
     import: optional:file:.env[.properties]
 
 jwt:
-  secret: ${JWT_SECRET}
+  secret: your-secret-key-here
