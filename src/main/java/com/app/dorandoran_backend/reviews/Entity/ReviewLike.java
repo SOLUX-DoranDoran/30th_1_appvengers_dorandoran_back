@@ -17,6 +17,11 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ReviewLike {
 
+    public ReviewLike(ReviewPost review, Members member) {
+        this.review = review;
+        this.member = member;
+    }
+
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id") // FK to member.id

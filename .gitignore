@@ -65,3 +65,5 @@ out/
 .env
 .env.*
 
+# Google Cloud 키 파일
+src/main/resources/googleCloud/*.json

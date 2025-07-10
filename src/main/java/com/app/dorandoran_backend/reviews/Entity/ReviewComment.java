@@ -2,6 +2,7 @@ package com.app.dorandoran_backend.reviews.Entity;
 
 import com.app.dorandoran_backend.mypage.Entity.Members;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -32,6 +33,14 @@ public class ReviewComment {
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt; // 작성 일시
+
+    @Builder
+    public ReviewComment(ReviewPost review, Members member, String content, LocalDateTime createdAt) {
+        this.review = review;
+        this.member = member;
+        this.content = content;
+        this.createdAt = createdAt;
+    }
 
 }
 

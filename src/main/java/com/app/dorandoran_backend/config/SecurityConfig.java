@@ -2,23 +2,31 @@ package com.app.dorandoran_backend.config;
 
 import com.app.dorandoran_backend.auth.jwt.JwtAuthenticationFilter;
 import com.app.dorandoran_backend.auth.jwt.JwtTokenProvider;
+import com.app.dorandoran_backend.auth.oauth.CustomOAuth2SuccessHandler;
+import com.app.dorandoran_backend.auth.service.PrincipalOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(securedEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig {
+
     private final JwtTokenProvider jwtTokenProvider;
+    private final PrincipalOAuth2UserService principalOauth2UserService;
+    private final CorsConfig corsConfig;
+    private final CustomOAuth2SuccessHandler customOAuth2SuccessHandler;
 
     // AuthenticationManager Bean 등록
     @Bean
@@ -26,34 +34,40 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 
-    // 비밀번호 암호화
     @Bean
-    public BCryptPasswordEncoder encodedPwd() {
-        return new BCryptPasswordEncoder();
-    }
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf(AbstractHttpConfigurer::disable)
+                .httpBasic(AbstractHttpConfigurer::disable)
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        return httpSecurity
-                .httpBasic().disable()
-                .csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeHttpRequests()
-                // 인증 없이 열어줄 경로들
-                .requestMatchers(
-                        "/api/auth/oauth/naver",
-                        "/api/auth/oauth/google",
-                        "/swagger-ui/**",
-                        "/v3/api-docs/**",
-                        "/swagger-resources/**",
-                        "/webjars/**"
-                ).permitAll()
-                .requestMatchers("/api/auth/test").hasAuthority("ROLE_USER")
-                .anyRequest().authenticated() // 나머지 요청은 인증 필요
-                .and()
-                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
-                .build();
+                // 인가 설정
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
+                                "/",
+                                "/api/auth/reissue",
+                                "/api/auth/oauth/naver",
+                                "/api/auth/oauth/google",
+                                "/api/auth/loginForm",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swagger-resources/**",
+                                "/webjars/**"
+                        ).permitAll()
+                        .requestMatchers("/api/auth/test").hasAuthority("ROLE_USER")
+                        .anyRequest().authenticated()
+                )
+
+                // OAuth2 설정
+                .oauth2Login(oauth2 -> oauth2
+                        .userInfoEndpoint(userInfo -> userInfo.userService(principalOauth2UserService))
+                        .successHandler(customOAuth2SuccessHandler)
+                )
+
+                // 필터 등록
+                .addFilterBefore(corsConfig.corsFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+
+        return http.build();
     }
 }
-
