@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.GenericFilterBean;
 
@@ -21,26 +22,31 @@ import java.util.List;
 @Slf4j
 public class JwtAuthenticationFilter extends GenericFilterBean {
     private final JwtTokenProvider jwtTokenProvider;
+    private static final AntPathMatcher pathMatcher = new AntPathMatcher();
 
     private static final List<String> EXCLUDED_PATHS = List.of(
+            "/",
+            "/api/auth/reissue",
             "/api/auth/loginForm",
-            "/api/auth/register",
-            "/api/auth/mailSend",
-            "/api/auth/mailCheck",
             "/api/auth/oauth/google",
-            "/api/auth/oauth/naver"
+            "/api/auth/oauth/naver",
+            "/swagger-ui/**",
+            "/v3/api-docs/**",
+            "/swagger-resources/**",
+            "/webjars/**"
     );
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
+
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
         String path = httpRequest.getRequestURI();
 
-        // 1. 인증 제외 경로는 필터 처리 안 함
-        if (EXCLUDED_PATHS.contains(path)) {
+        // 패턴 매칭을 이용해 필터 예외 처리
+        if (EXCLUDED_PATHS.stream().anyMatch(pattern -> pathMatcher.match(pattern, path))) {
             chain.doFilter(request, response);
             return;
         }
@@ -74,7 +80,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         }
     }
 
-    // Request Header에서 토큰 정보 추출
+    // 토큰을 HTTP 요청 헤더에서 추출
     private String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {

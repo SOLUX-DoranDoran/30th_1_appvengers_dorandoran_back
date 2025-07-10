@@ -1,10 +1,7 @@
 package com.app.dorandoran_backend.mypage.Entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -37,5 +34,17 @@ public class Members{
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt; // 가입 일시
+
+    private String refreshToken; // 리프레시 토큰
+
+    @Builder
+    public Members(Provider provider, String providerId, String email, String nickname, String profileImage, LocalDateTime createdAt) {
+        this.provider = provider;
+        this.providerId = providerId;
+        this.email = email;
+        this.nickname = nickname;
+        this.profileImage = profileImage;
+        this.createdAt = createdAt;
+    }
 
 }

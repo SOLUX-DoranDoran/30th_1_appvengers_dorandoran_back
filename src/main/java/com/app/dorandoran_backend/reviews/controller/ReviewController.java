@@ -1,51 +1,114 @@
 package com.app.dorandoran_backend.reviews.controller;
 
+import com.app.dorandoran_backend.mypage.Entity.Members;
+import com.app.dorandoran_backend.reviews.dto.ReviewCommentDto;
+import com.app.dorandoran_backend.reviews.dto.ReviewCommentRequestDto;
+import com.app.dorandoran_backend.mypage.service.MemberService;
+import com.app.dorandoran_backend.reviews.Entity.ReviewPost;
+import com.app.dorandoran_backend.reviews.repository.ReviewPostRepository;
+import com.app.dorandoran_backend.reviews.service.ReviewLikeService;
+import com.app.dorandoran_backend.reviews.service.ReviewService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class ReviewController {
+    private final ReviewPostRepository reviewPostRepository;
+    private final MemberService memberService;
+    private final ReviewLikeService reviewLikeService;
+    private final ReviewService reviewService;
+
     @GetMapping("/reviews/{reviewId}")
-    public String review() {
-        return "review";
+    public ResponseEntity<?> review(@PathVariable Long reviewId) {
+        return ResponseEntity.ok(reviewService.getReviewById(reviewId));
     }
 
     @PostMapping("/reviews/{reviewId}/like")
-    public String likeReview() {
-        return "likeReview";
+    public ResponseEntity<?> likeReview(@PathVariable Long reviewId) {
+        Members member = memberService.getCurrentMember();
+        ReviewPost review = reviewPostRepository.findById(reviewId)
+                .orElseThrow(() -> new RuntimeException("리뷰를 찾을 수 없습니다."));
+
+        try {
+            reviewLikeService.likeReview(member, review);
+            return ResponseEntity.ok(Map.of(
+                    "success", true,
+                    "message", "리뷰에 좋아요를 눌렀습니다.",
+                    "likeCount", review.getLikeCount()
+            ));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "success", false,
+                    "message", e.getMessage()
+            ));
+        }
     }
 
     @DeleteMapping("/reviews/{reviewId}/like")
-    public String unlikeReview() {
-        return "unlikeReview";
+    public ResponseEntity<?> unlikeReview(@PathVariable Long reviewId) {
+        Members member = memberService.getCurrentMember();
+        ReviewPost review = reviewPostRepository.findById(reviewId)
+                .orElseThrow(() -> new RuntimeException("리뷰를 찾을 수 없습니다."));
+
+        try {
+            reviewLikeService.unlikeReview(member, review);
+            return ResponseEntity.ok(Map.of(
+                    "success", true,
+                    "message", "리뷰 좋아요가 취소되었습니다.",
+                    "likeCount", review.getLikeCount()
+            ));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "success", false,
+                    "message", e.getMessage()
+            ));
+        }
     }
 
     @GetMapping("/reviews/{reviewId}/comments")
-    public String reviewComments() {
-        return "reviewComments";
+    public ResponseEntity<?> reviewComments(
+            @PathVariable Long reviewId,
+            @RequestParam(name = "page", defaultValue = "1") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size) {
+
+        Page<ReviewCommentDto> commentPage = reviewService.getComments(reviewId, page, size);
+
+        return ResponseEntity.ok(Map.of(
+                "comments", commentPage.getContent(),
+                "currentPage", commentPage.getNumber() + 1,
+                "totalPages", commentPage.getTotalPages(),
+                "totalComments", commentPage.getTotalElements()
+        ));
     }
 
     @PostMapping("/reviews/{reviewId}/comments")
-    public String createReviewComment() {
-        return "createReviewComment";
+    public ResponseEntity<?> createReviewComment(@PathVariable Long reviewId,
+                                                 @Valid @RequestBody ReviewCommentRequestDto reviewCommentRequestDto) {
+
+        Members member = memberService.getCurrentMember();
+        Long commentId = reviewService.createComment(member, reviewId, reviewCommentRequestDto.getContent());
+
+        return ResponseEntity.ok(Map.of(
+                "message", "댓글이 성공적으로 작성되었습니다.",
+                "commentId", commentId
+        ));
+
     }
 
-    @PostMapping("/comments/{commentId}/like")
-    public String likeComment() {
-        return "likeComment";
-    }
-
-    @DeleteMapping("/comments/{commentId}/like")
-    public String unlikeComment() {
-        return "unlikeComment";
-    }
 
     @GetMapping("/reviews")
-    public String getRecentReviews(
+    public ResponseEntity<?> getRecentReviews(
             @RequestParam(name = "sort", required = false, defaultValue = "recent") String sort,
             @RequestParam(name = "page", required = false, defaultValue = "1") int page,
             @RequestParam(name = "size", required = false, defaultValue = "10") int size) {
-        // 실제 로직: sort 기준과 limit 수량에 따라 리뷰 조회 처리
-        return "최근 리뷰 " + size + "개, 정렬 기준: " + sort + ", 페이지: " + page;
+
+        return ResponseEntity.ok(reviewService.getReviewList(sort, page, size));
     }
 }

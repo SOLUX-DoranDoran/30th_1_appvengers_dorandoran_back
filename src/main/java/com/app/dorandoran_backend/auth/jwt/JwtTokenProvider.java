@@ -1,17 +1,19 @@
 package com.app.dorandoran_backend.auth.jwt;
 
 import com.app.dorandoran_backend.auth.dto.JwtToken;
+import com.app.dorandoran_backend.auth.service.PrincipalDetails;
+import com.app.dorandoran_backend.mypage.Entity.Members;
+import com.app.dorandoran_backend.mypage.repository.MemberRepository;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -23,7 +25,9 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class JwtTokenProvider {
+    private final MemberRepository memberRepository;
     @Value("${jwt.secret}") // 필드에 주입
     private String secretKey;
 
@@ -31,10 +35,8 @@ public class JwtTokenProvider {
 
     @PostConstruct // 필드 주입 이후 실행됨
     public void init() {
-        System.out.println("secretKey: '" + secretKey + "'");
         byte[] keyBytes = Decoders.BASE64.decode(secretKey.trim());
         this.key = Keys.hmacShaKeyFor(keyBytes);
-        log.info("JWT Secret Key initialized.");
     }
 
     // Member 정보를 가지고 AccessToken, RefreshToken 생성하는 메소드
@@ -59,6 +61,7 @@ public class JwtTokenProvider {
 
         // RefreshToken 생성
         String refreshToken = Jwts.builder()
+                .setSubject(authentication.getName())  // subject 추가 (providerId)
                 .setExpiration(new Date(now + 1000 * 60 * 60 * 24 * 7)) // 7일 유효
                 .signWith(key, SignatureAlgorithm.HS256) // 서명 알고리즘
                 .compact();
@@ -85,10 +88,15 @@ public class JwtTokenProvider {
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
 
-        // UserDetails 객체를 만들어 Authentication return
-        // UserDetails: interface, User: UserDetails를 구현한 클래스
-        UserDetails principal = new User(claims.getSubject(), "", authorities);
-        return new UsernamePasswordAuthenticationToken(principal, "", authorities);
+        // 토큰의 providerId로 회원 정보 조회
+        String providerId = claims.getSubject();
+        Members member = memberRepository.findByProviderId(providerId)
+                .orElseThrow(() -> new RuntimeException("해당 사용자가 존재하지 않습니다."));
+
+        // PrincipalDetails로 래핑
+        PrincipalDetails principalDetails = new PrincipalDetails(member, claims);
+
+        return new UsernamePasswordAuthenticationToken(principalDetails, "", authorities);
     }
 
     // 토큰 정보를 검증하는 메서드
@@ -124,5 +132,40 @@ public class JwtTokenProvider {
         }
     }
 
+    public JwtToken reissueAccessToken(String refreshToken) {
+        // 1. refreshToken 유효성 검사
+        if (!validateToken(refreshToken)) {
+            throw new RuntimeException("유효하지 않은 Refresh Token입니다.");
+        }
+
+        // 2. refreshToken에서 사용자 정보(이메일) 추출
+        Claims claims = parseClaims(refreshToken);
+        String providerId = claims.getSubject();
+
+        // 3. DB에서 회원 조회
+        log.info("refreshToken subject(providerId): {}", claims.getSubject());
+        Members member = memberRepository.findByProviderId(providerId)
+                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
+
+        // 4. 권한 정보가 Members에 없으므로 기본 권한 부여
+        String authorities = "ROLE_USER";
+
+        // 5. 새로운 AccessToken 생성
+        long now = (new Date()).getTime();
+        Date accessTokenExpiresIn = new Date(now + 1000 * 60 * 15); // 15분 유효
+
+        String newAccessToken = Jwts.builder()
+                .setSubject(providerId)
+                .claim("auth", authorities)
+                .setExpiration(accessTokenExpiresIn)
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
+
+        return JwtToken.builder()
+                .grantType("Bearer")
+                .accessToken(newAccessToken)
+                .refreshToken(refreshToken) // 기존 refreshToken 그대로 반환하거나 새로 발급 가능
+                .build();
+    }
 
 }
