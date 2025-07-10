@@ -30,7 +30,9 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
             "/api/auth/loginForm",
             "/api/auth/oauth/google",
             "/api/auth/oauth/naver",
+            "/swagger-ui.html",
             "/swagger-ui/**",
+            "/v3/api-docs",
             "/v3/api-docs/**",
             "/swagger-resources/**",
             "/webjars/**"
@@ -52,6 +54,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         }
 
         String token = resolveToken(httpRequest);
+        log.info("요청 경로: {}", path);
 
         try {
             if (token == null || token.isEmpty()) {
