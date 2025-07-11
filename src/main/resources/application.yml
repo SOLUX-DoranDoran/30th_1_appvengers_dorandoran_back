@@ -9,6 +9,8 @@ server:
       force: true
 
 spring:
+  profiles:
+    active: local  # dev, local
   security:
     oauth2:
       client:
@@ -16,7 +18,6 @@ spring:
           google:
             client-id: ${GOOGLE_CLIENT_ID}
             client-secret: ${GOOGLE_CLIENT_SECRET}
-            redirect-uri: "${NGROK_URL}/login/oauth2/code/google"
             scope: profile, email
           naver:
             client-id: ${NAVER_CLIENT_ID}
@@ -24,7 +25,6 @@ spring:
             scope: name, email
             client-name: naver
             authorization-grant-type: authorization_code
-            redirect-uri: "http://192.168.0.109:8080/login/oauth2/code/naver"
         provider:
           naver:
             authorization-uri: https://nid.naver.com/oauth2.0/authorize
@@ -40,7 +40,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update #create update none
+      ddl-auto: update
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true
