@@ -45,6 +45,7 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/",
                                 "/favicon.ico",
+                                "/api/auth/test",
                                 "/api/auth/reissue",
                                 "/api/auth/oauth/naver",
                                 "/api/auth/oauth/google",
@@ -53,9 +54,9 @@ public class SecurityConfig {
                                 "/v3/api-docs/**",
                                 "/swagger-resources/**",
                                 "/webjars/**",
-                                "/h2-console/**"
+                                "/h2-console/**",
+                                "/error"
                         ).permitAll()
-                        .requestMatchers("/api/auth/test").hasAuthority("ROLE_USER")
                         .anyRequest().authenticated()
                 )
 
