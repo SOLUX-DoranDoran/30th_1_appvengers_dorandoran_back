@@ -41,9 +41,9 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
 
         // accessToken만 앱으로 리디렉션
         String redirectUri = UriComponentsBuilder
-                .fromUriString("http://localhost:8080/oauth2/callback")
+                .fromUriString("http://ec2-15-164-40-185.ap-northeast-2.compute.amazonaws.com:8080/api/auth/test")
                 // 앱 딥링크 (dorandoran-scheme://oauth2/callback)
-                // 웹 테스트 (http://localhost:8080/oauth2/callback)
+                // 웹 테스트 (http://ec2-15-164-40-185.ap-northeast-2.compute.amazonaws.com:8080/api/auth/test)
                 .queryParam("accessToken", jwtToken.getAccessToken())
                 .build()
                 .toUriString();

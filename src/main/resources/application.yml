@@ -10,7 +10,7 @@ server:
 
 spring:
   profiles:
-    active: test  # dev, local, test
+    active: local  # dev, local, test
   security:
     oauth2:
       client:

@@ -23,6 +23,27 @@ public class AuthController {
     private final JwtTokenService jwtTokenService;
     private final MemberAuthService memberAuthService;
 
+    @GetMapping("/test")
+    @ResponseBody
+    public String test(@RequestParam(name = "accessToken", required = false) String accessToken) {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("<html><body style='font-family:sans-serif;'>");
+
+        if (accessToken != null && !accessToken.isEmpty()) {
+            sb.append("<h2>Access Token:</h2>");
+            sb.append("<p style='color:green; word-break:break-all;'>").append(accessToken).append("</p>");
+        } else {
+            sb.append("<p style='color:red;'>accessToken 파라미터가 없습니다.</p>");
+        }
+
+        sb.append("<hr>");
+        sb.append("<h3 style='color:orange;'>앱 리디렉션 URL로 변경 필요</h3>");
+        sb.append("</body></html>");
+
+        return sb.toString();
+    }
+
     @PostMapping("/test")
     public String test() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
