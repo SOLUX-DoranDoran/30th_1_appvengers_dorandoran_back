@@ -34,7 +34,7 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/dorandoran?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://dorandoran.c9k4kmy4m3sd.ap-northeast-2.rds.amazonaws.com:3306/dorandoran?useSSL=false&serverTimezone=Asia/Seoul
     username: doran
     password: ${DB_PASSWORD}
 
