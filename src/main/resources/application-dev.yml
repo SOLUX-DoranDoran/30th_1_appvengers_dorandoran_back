@@ -7,3 +7,7 @@ spring:
             redirect-uri: "http://ec2-15-164-40-185.ap-northeast-2.compute.amazonaws.com:8080/login/oauth2/code/google"
           naver:
             redirect-uri: "http://ec2-15-164-40-185.ap-northeast-2.compute.amazonaws.com:8080/login/oauth2/code/naver"
+
+app:
+  oauth2:
+    redirect-base-url: "dorandoran-scheme://oauth2/callback"

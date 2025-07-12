@@ -10,7 +10,7 @@ server:
 
 spring:
   profiles:
-    active: dev  # dev, local, test
+    active: local  # dev, local, test
   security:
     oauth2:
       client:
@@ -55,6 +55,10 @@ spring:
 
 jwt:
   secret: ${JWT_SECRET}
+
+app:
+  oauth2:
+    redirect-base-url: "http://ec2-15-164-40-185.ap-northeast-2.compute.amazonaws.com:8080/api/auth/test"
 
 cloudinary:
   cloud_name: ${CLOUDINARY_CLOUD_NAME}
