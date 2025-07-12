@@ -9,3 +9,12 @@ spring:
     hibernate:
       ddl-auto: create-drop
     show-sql: true
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            redirect-uri: "http://localhost:8080/login/oauth2/code/google"
+          naver:
+            redirect-uri: "http://localhost:8080/login/oauth2/code/naver"
