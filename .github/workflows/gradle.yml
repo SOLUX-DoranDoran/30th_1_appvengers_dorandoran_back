@@ -12,7 +12,7 @@ on:
   push:
     branches: [ "release" ]
   pull_request:
-    branches: [ release ]
+    branches: [ "release" ]
 
 # 해당 코드에서 사용될 변수 설정
 env:
