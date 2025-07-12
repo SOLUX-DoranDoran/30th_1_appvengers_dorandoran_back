@@ -7,10 +7,13 @@ server:
       charset: UTF-8
       enabled: true
       force: true
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
 
 spring:
   profiles:
-    active: local  # dev, local, test
+    active: test  # local, test, aws
   security:
     oauth2:
       client:
@@ -55,7 +58,14 @@ app:
   oauth2:
     redirect-base-url: "http://ec2-15-164-40-185.ap-northeast-2.compute.amazonaws.com:8080/api/auth/test"
 
-cloudinary:
-  cloud_name: ${CLOUDINARY_CLOUD_NAME}
-  api_key: ${CLOUDINARY_API_KEY}
-  api_secret: ${CLOUDINARY_API_SECRET}
+cloud:
+  aws:
+    credentials:
+      access-key: ${AWS_ACCESS_KEY_ID}
+      secret-key: ${AWS_SECRET_ACCESS_KEY}
+    s3:
+      bucket: doran-profile-bucket
+    stack.auto: false
+    region:
+      static: ap-northeast-2
+      auto: false
