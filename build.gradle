@@ -50,7 +50,13 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-// plain JAR 생성 비활성화
-tasks.named('jar') {
+bootJar {
+	// plain jar 생성 비활성화
+	enabled = true // bootJar는 활성화
+	// plain jar 생성 방지
+	archiveClassifier.set('')
+}
+
+jar {
 	enabled = false
 }
