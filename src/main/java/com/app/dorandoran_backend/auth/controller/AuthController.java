@@ -23,6 +23,16 @@ public class AuthController {
     private final JwtTokenService jwtTokenService;
     private final MemberAuthService memberAuthService;
 
+    @GetMapping("/test")
+    public String gettest() {
+        String sb = "<html><body style='font-family:sans-serif;'>" +
+                "<hr>" +
+                "<h3 style='color:orange;'>앱 리디렉션 URL로 변경 필요</h3>" +
+                "</body></html>";
+
+        return sb;
+    }
+
     @PostMapping("/test")
     public String test() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

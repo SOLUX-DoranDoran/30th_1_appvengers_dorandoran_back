@@ -26,14 +26,21 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 
     private static final List<String> EXCLUDED_PATHS = List.of(
             "/",
+            "/favicon.ico",
+            "/api/auth/test",
             "/api/auth/reissue",
-            "/api/auth/loginForm",
             "/api/auth/oauth/google",
             "/api/auth/oauth/naver",
+            "/login/oauth2/code/google",
+            "/login/oauth2/code/naver",
+            "/swagger-ui.html",
             "/swagger-ui/**",
+            "/v3/api-docs",
             "/v3/api-docs/**",
             "/swagger-resources/**",
-            "/webjars/**"
+            "/webjars/**",
+            "/h2-console/**",
+            "/error"
     );
 
     @Override
@@ -52,9 +59,15 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         }
 
         String token = resolveToken(httpRequest);
+        log.info("요청 경로: {}", path);
 
         try {
             if (token == null || token.isEmpty()) {
+                // 로그인 성공 직후 경로라면 에러를 던지지 않고 통과
+                if (pathMatcher.match("/login/oauth2/code/**", path)) {
+                    chain.doFilter(request, response);
+                    return;
+                }
                 throw new RuntimeException("로그인이 필요합니다. 토큰이 존재하지 않습니다.");
             }
 
@@ -82,9 +95,16 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 
     // 토큰을 HTTP 요청 헤더에서 추출
     private String resolveToken(HttpServletRequest request) {
+        // 1) 헤더에서 Bearer 토큰 추출
         String bearerToken = request.getHeader("Authorization");
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7);
+        }
+
+        // 2) 헤더에 없으면 쿼리 파라미터에서 토큰 추출
+        String accessToken = request.getParameter("accessToken");
+        if (StringUtils.hasText(accessToken)) {
+            return accessToken;
         }
         return null;
     }
