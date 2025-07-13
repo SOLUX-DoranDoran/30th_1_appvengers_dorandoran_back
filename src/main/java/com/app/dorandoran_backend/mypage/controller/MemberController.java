@@ -2,7 +2,6 @@
 
 import com.app.dorandoran_backend.mypage.Entity.Members;
 import com.app.dorandoran_backend.mypage.dto.MemberResponseDto;
-import com.app.dorandoran_backend.mypage.dto.StorageImgResponseDto;
 import com.app.dorandoran_backend.mypage.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,29 +31,9 @@ public class MemberController {
 
     @PostMapping("/me/profile_image")
     public ResponseEntity<?> uploadProfileImage(@RequestPart("image") MultipartFile imageFile) throws IOException {
-        if (imageFile == null || imageFile.isEmpty()) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(Map.of(
-                            "success", false,
-                            "message", "업로드할 이미지 파일이 없습니다."
-                    ));
-        }
-
-        String originalFilename = imageFile.getOriginalFilename();
-        if (originalFilename == null ||
-                !(originalFilename.endsWith(".jpg") || originalFilename.endsWith(".jpeg") || originalFilename.endsWith(".png"))) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(Map.of(
-                            "success", false,
-                            "message", "지원하지 않는 파일 형식입니다. (jpg, jpeg, png만 허용)"
-                    ));
-        }
-
         Members member = memberService.getCurrentMember();
-        StorageImgResponseDto imageUrl = memberProfileService.uploadProfileImage(member, imageFile);
-        return ResponseEntity.ok(imageUrl);
+        String imageUrl = memberProfileService.uploadProfileImage(member, imageFile);
+        return ResponseEntity.ok(Map.of("profileImageUrl", imageUrl));
     }
 
     @GetMapping("/me/reviews")
