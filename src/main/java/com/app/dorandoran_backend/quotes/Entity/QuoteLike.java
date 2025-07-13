@@ -9,18 +9,23 @@ import lombok.Setter;
 @Entity
 @Table(name = "quoteLike",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"quote_id", "member_id"})
+                @UniqueConstraint(columnNames = {"member_id", "quote_id"})
         })
 @IdClass(QuoteLikeId.class)
 @Getter
 @Setter
 @NoArgsConstructor
 public class QuoteLike {
+	
+	public QuoteLike(QuotePost quote, Members member) {
+        this.quote = quote;
+        this.member = member;
+    }
 
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "quote_id", nullable = false)
-    private Quote quote;
+    private QuotePost quote;
 
     @Id
     @ManyToOne(fetch = FetchType.LAZY)

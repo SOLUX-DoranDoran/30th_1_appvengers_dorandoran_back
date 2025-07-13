@@ -1,4 +1,4 @@
-package com.app.dorandoran_backend.config;
+/*package com.app.dorandoran_backend.config;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
@@ -28,4 +28,5 @@ public class CloudinaryConfig {
         ));
     }
 }
+*/
 

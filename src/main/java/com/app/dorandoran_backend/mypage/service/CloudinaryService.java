@@ -1,4 +1,4 @@
-package com.app.dorandoran_backend.mypage.service;
+/*package com.app.dorandoran_backend.mypage.service;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
@@ -19,3 +19,4 @@ public class CloudinaryService {
         return (String) uploadResult.get("secure_url"); // HTTPS 이미지 URL 반환
     }
 }
+*/

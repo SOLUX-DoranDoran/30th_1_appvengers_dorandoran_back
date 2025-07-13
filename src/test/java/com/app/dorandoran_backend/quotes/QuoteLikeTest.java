@@ -1,10 +1,13 @@
 package com.app.dorandoran_backend.quotes;
 
+import com.app.dorandoran_backend.home.Entity.Books;
+import com.app.dorandoran_backend.home.repository.BookRepository;
 import com.app.dorandoran_backend.mypage.Entity.Members;
 import com.app.dorandoran_backend.mypage.repository.MemberRepository;
 import com.app.dorandoran_backend.quotes.Entity.Quote;
 import com.app.dorandoran_backend.quotes.Entity.QuoteLike;
 import com.app.dorandoran_backend.quotes.Entity.QuoteLikeId;
+import com.app.dorandoran_backend.quotes.Entity.QuotePost;
 import com.app.dorandoran_backend.quotes.repository.QuoteLikeRepository;
 import com.app.dorandoran_backend.quotes.repository.QuoteRepository;
 import jakarta.transaction.Transactional;
@@ -14,6 +17,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -31,6 +35,9 @@ public class QuoteLikeTest {
 
     @Autowired
     private QuoteRepository quoteRepository;
+    
+    @Autowired
+    private BookRepository bookRepository;
 
     @Autowired
     private QuoteLikeRepository quoteLikeRepository;
@@ -44,11 +51,18 @@ public class QuoteLikeTest {
         user.setProviderId("test123");
         user.setCreatedAt(LocalDateTime.now());
         memberRepository.save(user);
+        
+        Books book = new Books();
+        book.setTitle("테스트 도서");
+        book.setAuthor("작가");
+        book.setPublisher("출판사");
+        book.setPublisherDate(LocalDate.now());
+        bookRepository.save(book);
 
         // 2. 명언 생성 (user를 작성자로 설정)
-        Quote quote = new Quote();
+        QuotePost quote = new QuotePost();
         quote.setMember(user);
-        quote.setBookName("테스트 도서");
+        quote.setBook(book);
         quote.setContent("테스트 명언 내용");
         quote.setCreatedAt(LocalDateTime.now());
         quote.setLikeCount(0);
@@ -92,11 +106,18 @@ public class QuoteLikeTest {
         user.setProviderId("dup_test123");
         user.setCreatedAt(LocalDateTime.now());
         memberRepository.save(user);
+        
+        Books book = new Books();
+        book.setTitle("중복 테스트 도서");
+        book.setAuthor("작가");
+        book.setPublisher("출판사");
+        book.setPublisherDate(LocalDate.now());
+        bookRepository.save(book);
 
         // 2. 명언 생성
-        Quote quote = new Quote();
+        QuotePost quote = new QuotePost();
         quote.setMember(user);
-        quote.setBookName("중복 도서");
+        quote.setBook(book);
         quote.setContent("중복 테스트 명언");
         quote.setCreatedAt(LocalDateTime.now());
         quote.setLikeCount(0);
@@ -133,11 +154,18 @@ public class QuoteLikeTest {
         author.setProviderId("author_123");
         author.setCreatedAt(LocalDateTime.now());
         memberRepository.save(author);
+        
+        Books book = new Books();
+        book.setTitle("명언 도서");
+        book.setAuthor("작가");
+        book.setPublisher("출판사");
+        book.setPublisherDate(LocalDate.now());
+        bookRepository.save(book);
 
         // 2. 명언 생성
-        Quote quote = new Quote();
+        QuotePost quote = new QuotePost();
         quote.setMember(author);
-        quote.setBookName("다인 도서");
+        quote.setBook(book);
         quote.setContent("여러 사용자 좋아요 테스트 명언");
         quote.setCreatedAt(LocalDateTime.now());
         quote.setLikeCount(0);

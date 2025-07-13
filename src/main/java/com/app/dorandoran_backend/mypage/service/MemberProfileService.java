@@ -9,20 +9,20 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 @Service
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class MemberProfileService {
 
-    private final MemberRepository memberRepository;
-    private final CloudinaryService cloudinaryService;
+    //private final MemberRepository memberRepository;
+    //private final CloudinaryService cloudinaryService;
 
-    public String uploadProfileImage(Members member, MultipartFile imageFile) throws IOException {
+    //public String uploadProfileImage(Members member, MultipartFile imageFile) throws IOException {
         // Cloudinary에 이미지 업로드
-        String imageUrl = cloudinaryService.uploadImage(imageFile);
+        //String imageUrl = cloudinaryService.uploadImage(imageFile);
 
         // DB에 이미지 URL 저장
-        member.setProfileImage(imageUrl);
-        memberRepository.save(member);
+       // member.setProfileImage(imageUrl);
+       // memberRepository.save(member);
 
-        return imageUrl;
-    }
+        //return imageUrl;
+    //}
 }
