@@ -3,7 +3,6 @@ package com.app.dorandoran_backend.reviews;
 import com.app.dorandoran_backend.home.Entity.Books;
 import com.app.dorandoran_backend.home.repository.BookRepository;
 import com.app.dorandoran_backend.mypage.Entity.Members;
-import com.app.dorandoran_backend.mypage.Entity.Provider;
 import com.app.dorandoran_backend.mypage.repository.MemberRepository;
 import com.app.dorandoran_backend.reviews.Entity.ReviewPost;
 import com.app.dorandoran_backend.reviews.repository.ReviewPostRepository;
@@ -29,33 +28,30 @@ public class DummyReviewInsertTest {
 
     @Test
     public void insertDummyReviewsForBook1() {
-        // 1. 책 ID = 1
-        Books book = bookRepository.findById(1L)
-                .orElseThrow(() -> new RuntimeException("책을 찾을 수 없습니다."));
+        // 1. 모든 책 가져오기
+        List<Books> books = bookRepository.findAll();
 
-        // 2. 테스트용 멤버 1명 조회 또는 생성 (이메일로 조회 예시)
-        Members member = memberRepository.findByEmail("test@example.com")
-                .orElseGet(() -> {
-                    Members newMember = new Members();
-                    newMember.setEmail("test@example.com");
-                    newMember.setNickname("테스트유저");
-                    newMember.setProvider(Provider.GOOGLE);
-                    newMember.setProviderId("testuser123");
-                    newMember.setCreatedAt(LocalDateTime.now());
-                    return memberRepository.save(newMember);
-                });
+        if (books.isEmpty()) {
+            throw new RuntimeException("리뷰를 추가할 책이 없습니다.");
+        }
 
-        // 3. 더미 리뷰 리스트 생성
-        List<ReviewPost> reviews = List.of(
-                createReview(member, book, "정말 감동적인 이야기였어요. 별 다섯 개!", (byte) 5),
-                createReview(member, book, "재밌긴 했지만 전개가 조금 아쉬웠어요.", (byte) 3),
-                createReview(member, book, "몰입감 최고! 하루 만에 다 읽었어요.", (byte) 4)
-        );
+        // 2. ID 1, 2번 유저 조회
+        Members member1 = memberRepository.findById(1L)
+                .orElseThrow(() -> new RuntimeException("ID가 1인 회원이 존재하지 않습니다."));
+        Members member2 = memberRepository.findById(2L)
+                .orElseThrow(() -> new RuntimeException("ID가 2인 회원이 존재하지 않습니다."));
+
+        // 3. 책당 2개(각 유저당 1개) 리뷰 생성
+        List<ReviewPost> reviews = books.stream()
+                .flatMap(book -> List.of(
+                        createReview(member1, book, "정말 유익하게 읽었어요! 👍", (byte) 5),
+                        createReview(member2, book, "생각할 거리를 주는 책이었어요.", (byte) 4)
+                ).stream()).toList();
 
         // 4. 저장
         reviewPostRepository.saveAll(reviews);
 
-        System.out.println("더미 리뷰 3개가 성공적으로 추가되었습니다.");
+        System.out.printf("책 %d권에 대해 총 %d개의 리뷰가 저장되었습니다.%n", books.size(), reviews.size());
     }
 
     private ReviewPost createReview(Members member, Books book, String content, byte rating) {
@@ -69,4 +65,5 @@ public class DummyReviewInsertTest {
         review.setCommentCount(0);
         return review;
     }
+
 }
