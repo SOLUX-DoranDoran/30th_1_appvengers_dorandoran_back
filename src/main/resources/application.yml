@@ -13,7 +13,7 @@ server:
 
 spring:
   profiles:
-    active: dev, aws  # local, test, dev, aws
+    active: aws  # local(로컬 환경) test(웹 환경) aws(서버 배포시)
   security:
     oauth2:
       client:
@@ -22,10 +22,12 @@ spring:
             client-id: ${GOOGLE_CLIENT_ID}
             client-secret: ${GOOGLE_CLIENT_SECRET}
             scope: profile, email
+            redirect-uri: "http://ec2-15-164-67-216.ap-northeast-2.compute.amazonaws.com:8080/login/oauth2/code/google"
           naver:
             client-id: ${NAVER_CLIENT_ID}
             client-secret: ${NAVER_CLIENT_SECRET}
             scope: name, email
+            redirect-uri: "http://ec2-15-164-67-216.ap-northeast-2.compute.amazonaws.com:8080/login/oauth2/code/naver"
             client-name: naver
             authorization-grant-type: authorization_code
         provider:
@@ -56,7 +58,7 @@ jwt:
 
 app:
   oauth2:
-    redirect-base-url: "http://ec2-15-164-40-185.ap-northeast-2.compute.amazonaws.com:8080/api/auth/test"
+    redirect-base-url: "dorandoran-scheme://oauth2/callback"
 
 cloud:
   aws:

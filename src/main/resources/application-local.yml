@@ -1,3 +1,4 @@
+# 로컬에서 OAuth2 인증을 테스트하기 위한 설정 파일
 spring:
   security:
     oauth2:

@@ -1,13 +1,4 @@
-spring:
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            redirect-uri: "http://ec2-15-164-67-216.ap-northeast-2.compute.amazonaws.com:8080/login/oauth2/code/google"
-          naver:
-            redirect-uri: "http://ec2-15-164-67-216.ap-northeast-2.compute.amazonaws.com:8080/login/oauth2/code/naver"
-
+# 웹에서 테스트할 때 사용하는 설정 파일
 app:
   oauth2:
     redirect-base-url: "http://ec2-15-164-67-216.ap-northeast-2.compute.amazonaws.com:8080/api/auth/test"
