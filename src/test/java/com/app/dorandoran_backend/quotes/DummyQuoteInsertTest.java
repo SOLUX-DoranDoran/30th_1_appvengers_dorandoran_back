@@ -1,7 +1,6 @@
 package com.app.dorandoran_backend.quotes;
 
 import com.app.dorandoran_backend.mypage.Entity.Members;
-import com.app.dorandoran_backend.mypage.Entity.Provider;
 import com.app.dorandoran_backend.mypage.repository.MemberRepository;
 import com.app.dorandoran_backend.quotes.Entity.Quote;
 import com.app.dorandoran_backend.quotes.repository.QuoteRepository;
@@ -24,23 +23,16 @@ public class DummyQuoteInsertTest {
 
     @Test
     public void insertDummyQuotes() {
-        // 1. 테스트용 사용자 조회 또는 생성
-        Members member = memberRepository.findByEmail("test@example.com")
-                .orElseGet(() -> {
-                    Members newMember = new Members();
-                    newMember.setEmail("test@example.com");
-                    newMember.setNickname("테스트유저");
-                    newMember.setProvider(Provider.GOOGLE);
-                    newMember.setProviderId("testuser123");
-                    newMember.setCreatedAt(LocalDateTime.now());
-                    return memberRepository.save(newMember);
-                });
+        // 1. ID가 2번인 사용자 조회
+        Members member2 = memberRepository.findById(2L)
+                .orElseThrow(() -> new RuntimeException("ID가 2인 회원이 존재하지 않습니다."));
+
 
         // 2. 더미 글귀 생성
         List<Quote> quotes = List.of(
-                createQuote(member, "데미안", "새는 알에서 나오려고 투쟁한다. 알은 세계이다."),
-                createQuote(member, "아몬드", "사람은 감정을 알아야 한다. 그래야 타인을 이해할 수 있다."),
-                createQuote(member, "나미야 잡화점의 기적", "편지를 통해 세상이 조금씩 나아진다면 그걸로 충분하다.")
+                createQuote(member2, "연을 쫓는 아이", "너를 위해서라면 천 번이라도."),
+                createQuote(member2, "죽음에 관하여", "죽음이 두려운 것이 아니라, 살아 있는 동안 아무것도 하지 않는 것이 두렵다."),
+                createQuote(member2, "달까지 가자", "네가 옳다는 걸 세상이 알게 하자.")
         );
 
         // 3. 저장

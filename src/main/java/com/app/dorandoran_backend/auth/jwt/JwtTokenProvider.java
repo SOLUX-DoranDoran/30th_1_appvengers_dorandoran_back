@@ -138,21 +138,23 @@ public class JwtTokenProvider {
             throw new RuntimeException("유효하지 않은 Refresh Token입니다.");
         }
 
-        // 2. refreshToken에서 사용자 정보(이메일) 추출
+        // 2. refreshToken에서 사용자 정보 추출
         Claims claims = parseClaims(refreshToken);
         String providerId = claims.getSubject();
 
         // 3. DB에서 회원 조회
-        log.info("refreshToken subject(providerId): {}", claims.getSubject());
         Members member = memberRepository.findByProviderId(providerId)
                 .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
 
-        // 4. 권한 정보가 Members에 없으므로 기본 권한 부여
-        String authorities = "ROLE_USER";
+        // 4. DB에 저장된 refreshToken과 비교
+        if (member.getRefreshToken() == null || !member.getRefreshToken().equals(refreshToken)) {
+            throw new RuntimeException("리프레시 토큰이 일치하지 않습니다.");
+        }
 
         // 5. 새로운 AccessToken 생성
         long now = (new Date()).getTime();
         Date accessTokenExpiresIn = new Date(now + 1000 * 60 * 15); // 15분 유효
+        String authorities = "ROLE_USER";
 
         String newAccessToken = Jwts.builder()
                 .setSubject(providerId)
@@ -161,10 +163,23 @@ public class JwtTokenProvider {
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
+        // 6. 새로운 RefreshToken도 생성 (기존 토큰 무효화)
+        Date refreshTokenExpiresIn = new Date(now + 1000 * 60 * 60 * 24 * 7); // 7일 유효
+        String newRefreshToken = Jwts.builder()
+                .setSubject(providerId)
+                .setExpiration(refreshTokenExpiresIn)
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
+
+        // 7. DB에 새로운 RefreshToken 저장
+        member.setRefreshToken(newRefreshToken);
+        memberRepository.save(member);
+
+        // 8. 새 토큰 세트 반환
         return JwtToken.builder()
                 .grantType("Bearer")
                 .accessToken(newAccessToken)
-                .refreshToken(refreshToken) // 기존 refreshToken 그대로 반환하거나 새로 발급 가능
+                .refreshToken(newRefreshToken)
                 .build();
     }
 
