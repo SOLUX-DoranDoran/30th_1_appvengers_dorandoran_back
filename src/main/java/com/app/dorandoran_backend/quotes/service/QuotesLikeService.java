@@ -22,7 +22,7 @@ public class QuotesLikeService {
     public void likeQuote(Members member, QuotePost quote) {
         // 중복 체크
         if (QuoteLikeRepository.existsByQuoteAndMember(quote, member)) {
-            throw new RuntimeException("이미 좋아요한 리뷰입니다.");
+            throw new RuntimeException("이미 좋아요한 명언입니다.");
         }
 
         QuoteLike quoteLike = new QuoteLike();
@@ -37,9 +37,9 @@ public class QuotesLikeService {
     }
 
     @Transactional
-    public void unlikeReview(Members member, QuotePost quote) {
+    public void unlikeQuote(Members member, QuotePost quote) {
     	QuoteLike quoteLike = QuoteLikeRepository.findByQuoteAndMember(quote, member)
-                .orElseThrow(() -> new RuntimeException("좋아요한 적 없는 리뷰입니다."));
+                .orElseThrow(() -> new RuntimeException("좋아요한 적 없는 명언입니다."));
 
     	QuoteLikeRepository.delete(quoteLike);
 

@@ -13,4 +13,5 @@ import java.util.List;
 
 public interface QuoteRepository extends JpaRepository<QuotePost, Long> {
     List<Quote> findByMemberOrderByCreatedAtDesc(Members member);
+    Page<QuotePost> findAll(Pageable pageable);
 }
