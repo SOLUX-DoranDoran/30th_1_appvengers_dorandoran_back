@@ -29,7 +29,7 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
         OAuth2User oAuth2User = super.loadUser(oAuth2UserRequest);
         String registrationId = oAuth2UserRequest.getClientRegistration().getRegistrationId();
 
-        OAuth2UserInfo oAuth2UserInfo = null;
+        OAuth2UserInfo oAuth2UserInfo;
         if (registrationId.equalsIgnoreCase("google")) {
             log.info("구글 로그인 요청");
             oAuth2UserInfo = new GoogleUserInfo(oAuth2User.getAttributes());
@@ -53,6 +53,16 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
         Members member = memberRepository.findByProviderAndProviderId(provider, providerId);
 
         if (member == null) {
+            // 닉네임 중복 처리 로직
+            String baseNickname = nickname != null ? nickname : "user";
+            String uniqueNickname = baseNickname;
+            int counter = 1;
+
+            while (memberRepository.existsByNickname(uniqueNickname)) {
+                uniqueNickname = baseNickname + counter;
+                counter++;
+            }
+
             member = Members.builder()
                     .provider(provider)
                     .providerId(providerId)

@@ -13,7 +13,7 @@ server:
 
 spring:
   profiles:
-    active: local  # local, test, aws
+    active: dev, aws  # local, test, dev, aws
   security:
     oauth2:
       client:

@@ -24,21 +24,25 @@ public class AuthController {
     private final MemberAuthService memberAuthService;
 
     @GetMapping("/test")
-    public String gettest() {
-        String sb = "<html><body style='font-family:sans-serif;'>" +
+    public String get_test() {
+        return "<html><body style='font-family:sans-serif;'>" +
                 "<hr>" +
                 "<h3 style='color:orange;'>앱 리디렉션 URL로 변경 필요</h3>" +
                 "</body></html>";
-
-        return sb;
     }
 
     @PostMapping("/test")
     public String test() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-        String nickname = principalDetails.getMember().getNickname();
-        return nickname + "님, 안녕하세요!";
+        Object principal = authentication.getPrincipal();
+
+        if (principal instanceof PrincipalDetails principalDetails) {
+            String nickname = principalDetails.getMember().getNickname();
+            return nickname + "님, 안녕하세요!";
+        } else {
+            // 인증 안 된 상태 또는 anonymousUser 일 때 처리
+            return "인증되지 않은 사용자입니다.";
+        }
     }
 
     @GetMapping("/refresh-token")
@@ -74,5 +78,26 @@ public class AuthController {
                     ));
         }
     }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(Authentication authentication) {
+        String providerId = authentication.getName();
+        memberAuthService.removeRefreshToken(providerId);
+
+        return ResponseEntity.ok(Map.of(
+                "success", true,
+                "message", "로그아웃 되었습니다."
+        ));
+    }
+
+//    @DeleteMapping("/withdraw")
+//    public ResponseEntity<?> withdraw(Authentication authentication) {
+//        String providerId = authentication.getName();
+//        memberAuthService.deleteMember(providerId);
+//        return ResponseEntity.ok(Map.of(
+//                "success", true,
+//                "message", "회원 탈퇴가 완료되었습니다."
+//        ));
+//    }
 
 }

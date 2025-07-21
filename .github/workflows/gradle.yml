@@ -27,6 +27,8 @@ permissions:
 
 jobs:
   build:
+    # PR merge가 아닌 경우에만 실행
+    if: github.event_name != 'push' || github.actor != 'web-flow'
 
     # Github의 워크플로에서 실행될 OS 선택
     runs-on: ubuntu-latest
@@ -41,16 +43,20 @@ jobs:
           java-version: '24'
           distribution: 'temurin'
 
-      - name: Create .env file
+      # create application.yml
+      - name: make application-aws.yml
+        if: contains(github.ref, 'release')
         run: |
-          echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> .env
-          echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> .env
-          echo "NAVER_CLIENT_ID=${{ secrets.NAVER_CLIENT_ID }}" >> .env
-          echo "NAVER_CLIENT_SECRET=${{ secrets.NAVER_CLIENT_SECRET }}" >> .env
-          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
-          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
-          echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> .env
-          echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> .env
+          # spring의 resources 경로로 이동
+          cd ./src/main/resources
+
+          ls -al
+          touch ./application-aws.yml
+
+          # GitHub-Actions에서 설정한 값을 application-aws.yml 파일에 쓰기
+          echo "copy properties"
+          echo "${{ secrets.AWS_PROPERTIES }}" > ./application-aws.yml
+        shell: bash
 
       # gradlew 파일 실행권한 설정
       - name: Grant execute permission for gradlew
