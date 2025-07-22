@@ -3,6 +3,8 @@ package com.app.dorandoran_backend.reviews.Entity;
 import com.app.dorandoran_backend.home.Entity.Books;
 import com.app.dorandoran_backend.mypage.Entity.Members;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,8 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor 
+@Builder
 public class ReviewPost {
 
     @Id

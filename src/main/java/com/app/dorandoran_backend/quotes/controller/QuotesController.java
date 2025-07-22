@@ -51,7 +51,7 @@ public class QuotesController {
         }
     }
 
-    @DeleteMapping("quotes/{quoteId}/like")
+    @DeleteMapping("/quotes/{quoteId}/like")
     public ResponseEntity<?> unlikeQuote(@PathVariable Long quoteId) {
         Members member = memberService.getCurrentMember();
         QuotePost quote = quoteRepository.findById(quoteId)
@@ -71,7 +71,7 @@ public class QuotesController {
             ));
         }
     }
-
+  
     @GetMapping("/quotes")
     public ResponseEntity<?> getRecentQuotes(
             @RequestParam(name = "sort", required = false, defaultValue = "recent") String sort,

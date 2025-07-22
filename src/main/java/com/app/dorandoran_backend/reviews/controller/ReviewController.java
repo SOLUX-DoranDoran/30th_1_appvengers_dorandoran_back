@@ -3,6 +3,7 @@ package com.app.dorandoran_backend.reviews.controller;
 import com.app.dorandoran_backend.mypage.Entity.Members;
 import com.app.dorandoran_backend.reviews.dto.ReviewCommentDto;
 import com.app.dorandoran_backend.reviews.dto.ReviewCommentRequestDto;
+import com.app.dorandoran_backend.reviews.dto.ReviewDto;
 import com.app.dorandoran_backend.mypage.service.MemberService;
 import com.app.dorandoran_backend.reviews.Entity.ReviewPost;
 import com.app.dorandoran_backend.reviews.repository.ReviewPostRepository;
@@ -29,7 +30,7 @@ public class ReviewController {
     public ResponseEntity<?> review(@PathVariable Long reviewId) {
         return ResponseEntity.ok(reviewService.getReviewById(reviewId));
     }
-
+    
     @PostMapping("/reviews/{reviewId}/like")
     public ResponseEntity<?> likeReview(@PathVariable Long reviewId) {
         Members member = memberService.getCurrentMember();
@@ -111,4 +112,5 @@ public class ReviewController {
 
         return ResponseEntity.ok(reviewService.getReviewList(sort, page, size));
     }
+
 }

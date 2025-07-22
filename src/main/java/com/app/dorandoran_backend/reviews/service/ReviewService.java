@@ -1,5 +1,7 @@
 package com.app.dorandoran_backend.reviews.service;
 
+import com.app.dorandoran_backend.home.Entity.Books;
+import com.app.dorandoran_backend.home.repository.BookRepository;
 import com.app.dorandoran_backend.mypage.Entity.Members;
 import com.app.dorandoran_backend.reviews.Entity.ReviewComment;
 import com.app.dorandoran_backend.reviews.Entity.ReviewPost;
@@ -24,6 +26,7 @@ public class ReviewService {
 
     private final ReviewPostRepository reviewPostRepository;
     private final ReviewCommentRepository reviewCommentRepository;
+    private final BookRepository bookRepository;
 
     public ReviewDto getReviewById(Long reviewId) {
         ReviewPost review = reviewPostRepository.findById(reviewId)
@@ -47,6 +50,26 @@ public class ReviewService {
         Pageable pageable = PageRequest.of(page - 1, size, Sort.by(Sort.Direction.DESC, "createdAt"));
         return reviewCommentRepository.findAllByReview(review, pageable)
                 .map(ReviewCommentDto::from);
+    }
+    
+    @Transactional
+    public Long createReview(Members member, ReviewDto dto) {
+    	
+    	Books book = bookRepository.findByTitle(dto.getBookTitle())
+                .orElseThrow(() -> new IllegalArgumentException("해당 책이 없습니다"));
+    	
+        ReviewPost review = ReviewPost.builder()
+                .member(member)
+                .book(book)
+                .content(dto.getContent())
+                .rating(dto.getRating())
+                .createdAt(LocalDateTime.now())
+                .commentCount(0)
+                .likeCount(0)
+                .build();
+
+        reviewPostRepository.save(review);
+        return review.getId();
     }
 
     @Transactional

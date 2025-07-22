@@ -12,6 +12,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface QuoteRepository extends JpaRepository<QuotePost, Long> {
-    List<Quote> findByMemberOrderByCreatedAtDesc(Members member);
+    List<QuotePost> findByMemberOrderByCreatedAtDesc(Members member);
     Page<QuotePost> findAll(Pageable pageable);
 }

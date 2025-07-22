@@ -3,13 +3,16 @@ package com.app.dorandoran_backend.reviews.dto;
 import com.app.dorandoran_backend.reviews.Entity.ReviewPost;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Getter
+@Setter
 @Builder
 public class ReviewDto {
     private Long id;
+    private Long bookId;
     private String bookTitle;
     private String coverImageUrl;
     private String content;

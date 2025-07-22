@@ -24,20 +24,22 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class QuotePost {
-	@Id
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; // 글귀 ID
 
+    // 작성자(회원) - NOT NULL, ManyToOne
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
-    private Members member; // 유저고유 ID
+    private Members member; // 유저 ID
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "book_name", nullable = false)
-    private Books book; // 글귀 도서 제목
+    @JoinColumn(name = "book_id", nullable = false)
+    private Books book; // 리뷰 대상 도서 ID
 
-    @Column(columnDefinition = "TEXT")
-    private String content; // 글귀 본문
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String content; // 글귀 내용
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt; // 작성 일시
@@ -45,5 +47,5 @@ public class QuotePost {
     @Column(name = "like_count", nullable = false)
     private int likeCount = 0; // 좋아요 수
 
-
 }
+
