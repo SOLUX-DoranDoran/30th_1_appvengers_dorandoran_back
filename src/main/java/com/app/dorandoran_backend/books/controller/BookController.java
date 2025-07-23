@@ -30,9 +30,9 @@ public class BookController {
 	private final MemberService memberService;
 	private final ReviewService reviewService; 
 	    
-	@GetMapping("/books/{id}")
-    public ResponseEntity<?> getBook(@PathVariable("id") Long id) {
-        Books book = bookRepository.findById(id)
+	@GetMapping("/books/bookId}")
+    public ResponseEntity<?> getBook(@PathVariable("bookId") Long bookId) {
+        Books book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new RuntimeException("해당 책을 찾을 수 없습니다."));
         return ResponseEntity.ok(book);
     }
