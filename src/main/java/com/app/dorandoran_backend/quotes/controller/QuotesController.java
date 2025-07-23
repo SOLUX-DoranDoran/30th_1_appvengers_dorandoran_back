@@ -9,28 +9,35 @@ import org.springframework.web.bind.annotation.*;
 import com.app.dorandoran_backend.mypage.Entity.Members;
 import com.app.dorandoran_backend.mypage.service.MemberService;
 import com.app.dorandoran_backend.quotes.Entity.QuotePost;
+import com.app.dorandoran_backend.quotes.dto.QuoteDto;
 import com.app.dorandoran_backend.quotes.repository.QuoteRepository;
 import com.app.dorandoran_backend.quotes.service.QuoteService;
 import com.app.dorandoran_backend.quotes.service.QuotesLikeService;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
+
 public class QuotesController {
     private final QuoteRepository quoteRepository;
     private final MemberService memberService;
     private final QuotesLikeService quoteLikeService;
     private final QuoteService quoteService;
 
-    @GetMapping("/quotes/{quoteId}")
-    public ResponseEntity<?> review(@PathVariable Long quoteId) {
+    @GetMapping("/quots/{quoteId}")
+    public ResponseEntity<?> review(@PathVariable("quoteId") Long quoteId) {
         return ResponseEntity.ok(quoteService.getQuoteById(quoteId));
     }
-
+    
+    @GetMapping("/quotes/recent")
+    public ResponseEntity<List<QuoteDto>> getRecentQuotes() {
+        return ResponseEntity.ok(quoteService.getRecentQuotes());
+    }
     @PostMapping("/quotes/{quoteId}/like")
-    public ResponseEntity<?> likeQuote(@PathVariable Long quoteId) {
+    public ResponseEntity<?> likeQuote(@PathVariable("quoteId") Long quoteId) {
     	System.out.println("likeQuote 진입: " + quoteId);
         Members member = memberService.getCurrentMember();
         QuotePost quote = quoteRepository.findById(quoteId)
@@ -52,7 +59,7 @@ public class QuotesController {
     }
 
     @DeleteMapping("/quotes/{quoteId}/like")
-    public ResponseEntity<?> unlikeQuote(@PathVariable Long quoteId) {
+    public ResponseEntity<?> unlikeQuote(@PathVariable("quoteId") Long quoteId) {
         Members member = memberService.getCurrentMember();
         QuotePost quote = quoteRepository.findById(quoteId)
                 .orElseThrow(() -> new RuntimeException("명언을 찾을 수 없습니다."));
@@ -71,7 +78,7 @@ public class QuotesController {
             ));
         }
     }
-  
+
     @GetMapping("/quotes")
     public ResponseEntity<?> getRecentQuotes(
             @RequestParam(name = "sort", required = false, defaultValue = "recent") String sort,

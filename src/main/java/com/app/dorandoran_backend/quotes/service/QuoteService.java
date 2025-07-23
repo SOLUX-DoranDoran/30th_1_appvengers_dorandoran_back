@@ -37,5 +37,12 @@ public class QuoteService {
         return quoteRepository.findAll(pageable)
                 .stream().map(QuoteDto::from).toList();
     }
+    
+    public List<QuoteDto> getRecentQuotes() {
+        return quoteRepository.findTop10ByOrderByCreatedAtDesc()
+                .stream()
+                .map(QuoteDto::from)
+                .toList();
+    }
 }
 
