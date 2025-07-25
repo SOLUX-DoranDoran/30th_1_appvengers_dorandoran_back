@@ -1,6 +1,6 @@
 /*package com.app.dorandoran_backend.mypage.controller;
 
-import com.app.dorandoran_backend.mypage.Entity.Members;
+import com.app.dorandoran_backend.mypage.entity.Members;
 import com.app.dorandoran_backend.mypage.dto.MemberResponseDto;
 import com.app.dorandoran_backend.mypage.dto.StorageImgResponseDto;
 import com.app.dorandoran_backend.mypage.service.*;

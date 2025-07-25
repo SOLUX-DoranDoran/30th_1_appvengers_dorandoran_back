@@ -5,7 +5,6 @@ import com.app.dorandoran_backend.auth.service.JwtTokenService;
 import com.app.dorandoran_backend.auth.service.MemberAuthService;
 import com.app.dorandoran_backend.auth.service.PrincipalDetails;
 import com.app.dorandoran_backend.mypage.entity.Members;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

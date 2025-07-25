@@ -1,5 +1,11 @@
 package com.app.dorandoran_backend.debate;
 
+<<<<<<< HEAD
+=======
+import com.app.dorandoran_backend.debate.entity.DebateRoom;
+import com.app.dorandoran_backend.debate.entity.DebateMessage;
+import com.app.dorandoran_backend.debate.entity.DebateComments;
+>>>>>>> main
 import com.app.dorandoran_backend.debate.repository.DebateRoomRepository;
 import com.app.dorandoran_backend.debate.repository.DebateMessageRepository;
 import com.app.dorandoran_backend.debate.entity.DebateComments;

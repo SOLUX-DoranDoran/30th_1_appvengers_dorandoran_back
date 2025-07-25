@@ -1,11 +1,17 @@
 package com.app.dorandoran_backend.quotes;
 
+<<<<<<< HEAD
 import com.app.dorandoran_backend.home.entity.Books;
 import com.app.dorandoran_backend.home.repository.BookRepository;
 import com.app.dorandoran_backend.mypage.entity.Members;
 import com.app.dorandoran_backend.mypage.entity.Provider;
 import com.app.dorandoran_backend.mypage.repository.MemberRepository;
 import com.app.dorandoran_backend.quotes.entity.QuotePost;
+=======
+import com.app.dorandoran_backend.mypage.entity.Members;
+import com.app.dorandoran_backend.mypage.repository.MemberRepository;
+import com.app.dorandoran_backend.quotes.entity.Quote;
+>>>>>>> main
 import com.app.dorandoran_backend.quotes.repository.QuoteRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

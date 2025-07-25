@@ -1,8 +1,8 @@
 package com.app.dorandoran_backend.mypage.dto;
 
-import java.time.LocalDateTime;
-
 import com.app.dorandoran_backend.mypage.entity.Members;
+
+import java.time.LocalDateTime;
 
 public record MemberResponseDto(
         Long id,

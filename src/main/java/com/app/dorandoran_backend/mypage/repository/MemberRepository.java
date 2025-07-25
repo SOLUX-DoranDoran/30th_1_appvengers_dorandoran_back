@@ -1,9 +1,8 @@
 package com.app.dorandoran_backend.mypage.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.app.dorandoran_backend.mypage.entity.Members;
 import com.app.dorandoran_backend.mypage.entity.Provider;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 

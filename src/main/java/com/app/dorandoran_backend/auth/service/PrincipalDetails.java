@@ -1,12 +1,11 @@
 package com.app.dorandoran_backend.auth.service;
 
+import com.app.dorandoran_backend.mypage.entity.Members;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-
-import com.app.dorandoran_backend.mypage.entity.Members;
 
 import java.util.Collection;
 import java.util.Collections;

@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,9 @@ import java.io.IOException;
 public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler {
     private final JwtTokenProvider jwtTokenProvider;
     private final MemberRepository memberRepository;
+
+    @Value("${app.oauth2.redirect-base-url}")
+    private String redirectBaseUrl;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
@@ -41,14 +45,17 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
 
         // accessToken만 앱으로 리디렉션
         String redirectUri = UriComponentsBuilder
-                .fromUriString("http://localhost:8080/oauth2/callback")
+                .fromUriString(redirectBaseUrl) // 환경 변수에서 리디렉션 URL 가져오기
                 // 앱 딥링크 (dorandoran-scheme://oauth2/callback)
-                // 웹 테스트 (http://localhost:8080/oauth2/callback)
+                // 웹 테스트 (http://ec2-15-164-67-216.ap-northeast-2.compute.amazonaws.com:8080/api/auth/test)
+                // 웹 로컬 (http://localhost:8080/api/auth/test)
                 .queryParam("accessToken", jwtToken.getAccessToken())
+                .queryParam("refreshToken", jwtToken.getRefreshToken())
                 .build()
                 .toUriString();
 
         // 앱으로 리디렉션
+        log.info("앱으로 리디렉트: {}", redirectUri);
         response.sendRedirect(redirectUri);
     }
 }

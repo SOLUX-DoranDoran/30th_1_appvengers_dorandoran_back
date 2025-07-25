@@ -1,8 +1,8 @@
 package com.app.dorandoran_backend.auth.oauth;
 
-import java.util.Map;
-
 import com.app.dorandoran_backend.mypage.entity.Provider;
+
+import java.util.Map;
 
 public class GoogleUserInfo implements OAuth2UserInfo{
 
