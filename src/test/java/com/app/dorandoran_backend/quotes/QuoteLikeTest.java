@@ -1,10 +1,10 @@
 package com.app.dorandoran_backend.quotes;
 
-import com.app.dorandoran_backend.mypage.Entity.Members;
+import com.app.dorandoran_backend.mypage.entity.Members;
 import com.app.dorandoran_backend.mypage.repository.MemberRepository;
-import com.app.dorandoran_backend.quotes.Entity.Quote;
-import com.app.dorandoran_backend.quotes.Entity.QuoteLike;
-import com.app.dorandoran_backend.quotes.Entity.QuoteLikeId;
+import com.app.dorandoran_backend.quotes.entity.Quote;
+import com.app.dorandoran_backend.quotes.entity.QuoteLike;
+import com.app.dorandoran_backend.quotes.entity.QuoteLikeId;
 import com.app.dorandoran_backend.quotes.repository.QuoteLikeRepository;
 import com.app.dorandoran_backend.quotes.repository.QuoteRepository;
 import jakarta.transaction.Transactional;
@@ -18,7 +18,7 @@ import org.springframework.test.context.ActiveProfiles;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import static com.app.dorandoran_backend.mypage.Entity.Provider.GOOGLE;
+import static com.app.dorandoran_backend.mypage.entity.Provider.GOOGLE;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest

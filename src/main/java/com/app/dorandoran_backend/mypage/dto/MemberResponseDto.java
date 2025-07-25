@@ -1,6 +1,6 @@
 package com.app.dorandoran_backend.mypage.dto;
 
-import com.app.dorandoran_backend.mypage.Entity.Members;
+import com.app.dorandoran_backend.mypage.entity.Members;
 
 import java.time.LocalDateTime;
 

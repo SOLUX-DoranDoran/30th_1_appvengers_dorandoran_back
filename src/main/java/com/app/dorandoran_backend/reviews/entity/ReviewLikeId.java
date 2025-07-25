@@ -1,4 +1,4 @@
-package com.app.dorandoran_backend.reviews.Entity;
+package com.app.dorandoran_backend.reviews.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,10 +1,10 @@
 package com.app.dorandoran_backend.reviews.controller;
 
-import com.app.dorandoran_backend.mypage.Entity.Members;
+import com.app.dorandoran_backend.mypage.entity.Members;
 import com.app.dorandoran_backend.reviews.dto.ReviewCommentDto;
 import com.app.dorandoran_backend.reviews.dto.ReviewCommentRequestDto;
 import com.app.dorandoran_backend.mypage.service.MemberService;
-import com.app.dorandoran_backend.reviews.Entity.ReviewPost;
+import com.app.dorandoran_backend.reviews.entity.ReviewPost;
 import com.app.dorandoran_backend.reviews.repository.ReviewPostRepository;
 import com.app.dorandoran_backend.reviews.service.ReviewLikeService;
 import com.app.dorandoran_backend.reviews.service.ReviewService;

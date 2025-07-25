@@ -1,7 +1,7 @@
 package com.app.dorandoran_backend.quotes.repository;
 
-import com.app.dorandoran_backend.quotes.Entity.QuoteLike;
-import com.app.dorandoran_backend.quotes.Entity.QuoteLikeId;
+import com.app.dorandoran_backend.quotes.entity.QuoteLike;
+import com.app.dorandoran_backend.quotes.entity.QuoteLikeId;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface QuoteLikeRepository extends JpaRepository<QuoteLike, QuoteLikeId> {

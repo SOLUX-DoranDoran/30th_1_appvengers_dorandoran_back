@@ -2,7 +2,7 @@ package com.app.dorandoran_backend.auth.oauth;
 
 import com.app.dorandoran_backend.auth.dto.JwtToken;
 import com.app.dorandoran_backend.auth.jwt.JwtTokenProvider;
-import com.app.dorandoran_backend.mypage.Entity.Members;
+import com.app.dorandoran_backend.mypage.entity.Members;
 import com.app.dorandoran_backend.mypage.repository.MemberRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -43,21 +43,19 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
         member.setRefreshToken(jwtToken.getRefreshToken());
         memberRepository.save(member);
 
-        // accessToken과 refreshToken을 해시(fragment)로 전달
-        String fragment = String.format("accessToken=%s&refreshToken=%s",
-                jwtToken.getAccessToken(), jwtToken.getRefreshToken());
-
         // accessToken만 앱으로 리디렉션
         String redirectUri = UriComponentsBuilder
                 .fromUriString(redirectBaseUrl) // 환경 변수에서 리디렉션 URL 가져오기
                 // 앱 딥링크 (dorandoran-scheme://oauth2/callback)
-                // 웹 테스트 (http://ec2-15-164-40-185.ap-northeast-2.compute.amazonaws.com:8080/api/auth/test)
+                // 웹 테스트 (http://ec2-15-164-67-216.ap-northeast-2.compute.amazonaws.com:8080/api/auth/test)
                 // 웹 로컬 (http://localhost:8080/api/auth/test)
-                .fragment(fragment)
+                .queryParam("accessToken", jwtToken.getAccessToken())
+                .queryParam("refreshToken", jwtToken.getRefreshToken())
                 .build()
                 .toUriString();
 
         // 앱으로 리디렉션
+        log.info("앱으로 리디렉트: {}", redirectUri);
         response.sendRedirect(redirectUri);
     }
 }

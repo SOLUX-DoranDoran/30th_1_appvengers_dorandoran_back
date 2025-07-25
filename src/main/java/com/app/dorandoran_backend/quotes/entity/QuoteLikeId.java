@@ -1,4 +1,4 @@
-package com.app.dorandoran_backend.quotes.Entity;
+package com.app.dorandoran_backend.quotes.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

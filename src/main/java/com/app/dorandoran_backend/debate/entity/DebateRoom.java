@@ -1,7 +1,7 @@
-package com.app.dorandoran_backend.debate.Entity;
+package com.app.dorandoran_backend.debate.entity;
 
-import com.app.dorandoran_backend.home.Entity.Books;
-import com.app.dorandoran_backend.mypage.Entity.Members;
+import com.app.dorandoran_backend.home.entity.Books;
+import com.app.dorandoran_backend.mypage.entity.Members;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

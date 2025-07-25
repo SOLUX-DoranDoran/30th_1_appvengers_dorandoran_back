@@ -1,4 +1,4 @@
-package com.app.dorandoran_backend.mypage.Entity;
+package com.app.dorandoran_backend.mypage.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

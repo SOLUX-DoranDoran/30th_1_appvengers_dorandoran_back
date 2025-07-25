@@ -1,8 +1,8 @@
 package com.app.dorandoran_backend.reviews.service;
 
-import com.app.dorandoran_backend.mypage.Entity.Members;
-import com.app.dorandoran_backend.reviews.Entity.ReviewLike;
-import com.app.dorandoran_backend.reviews.Entity.ReviewPost;
+import com.app.dorandoran_backend.mypage.entity.Members;
+import com.app.dorandoran_backend.reviews.entity.ReviewLike;
+import com.app.dorandoran_backend.reviews.entity.ReviewPost;
 import com.app.dorandoran_backend.reviews.repository.ReviewLikeRepository;
 import com.app.dorandoran_backend.reviews.repository.ReviewPostRepository;
 import jakarta.transaction.Transactional;

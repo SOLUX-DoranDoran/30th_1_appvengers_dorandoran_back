@@ -1,6 +1,6 @@
 package com.app.dorandoran_backend.mypage.service;
 
-import com.app.dorandoran_backend.mypage.Entity.Members;
+import com.app.dorandoran_backend.mypage.entity.Members;
 import com.app.dorandoran_backend.quotes.dto.QuoteDto;
 import com.app.dorandoran_backend.quotes.repository.QuoteRepository;
 import lombok.RequiredArgsConstructor;

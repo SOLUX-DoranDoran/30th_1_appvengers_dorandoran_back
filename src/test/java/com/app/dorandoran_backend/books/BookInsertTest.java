@@ -1,6 +1,6 @@
 package com.app.dorandoran_backend.books;
 
-import com.app.dorandoran_backend.home.Entity.Books;
+import com.app.dorandoran_backend.home.entity.Books;
 import com.app.dorandoran_backend.home.repository.BookRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
