@@ -1,14 +1,14 @@
 package com.app.dorandoran_backend.debate;
 
-import com.app.dorandoran_backend.debate.Entity.DebateRoom;
-import com.app.dorandoran_backend.debate.Entity.DebateMessage;
-import com.app.dorandoran_backend.debate.Entity.DebateComments;
 import com.app.dorandoran_backend.debate.repository.DebateRoomRepository;
 import com.app.dorandoran_backend.debate.repository.DebateMessageRepository;
+import com.app.dorandoran_backend.debate.entity.DebateComments;
+import com.app.dorandoran_backend.debate.entity.DebateMessage;
+import com.app.dorandoran_backend.debate.entity.DebateRoom;
 import com.app.dorandoran_backend.debate.repository.DebateCommentsRepository;
-import com.app.dorandoran_backend.home.Entity.Books;
+import com.app.dorandoran_backend.home.entity.Books;
 import com.app.dorandoran_backend.home.repository.BookRepository;
-import com.app.dorandoran_backend.mypage.Entity.Members;
+import com.app.dorandoran_backend.mypage.entity.Members;
 import com.app.dorandoran_backend.mypage.repository.MemberRepository;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.AfterEach;
@@ -23,7 +23,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.app.dorandoran_backend.mypage.Entity.Provider.GOOGLE;
+import static com.app.dorandoran_backend.mypage.entity.Provider.GOOGLE;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest

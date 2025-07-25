@@ -2,7 +2,7 @@ package com.app.dorandoran_backend.auth.jwt;
 
 import com.app.dorandoran_backend.auth.dto.JwtToken;
 import com.app.dorandoran_backend.auth.service.PrincipalDetails;
-import com.app.dorandoran_backend.mypage.Entity.Members;
+import com.app.dorandoran_backend.mypage.entity.Members;
 import com.app.dorandoran_backend.mypage.repository.MemberRepository;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;

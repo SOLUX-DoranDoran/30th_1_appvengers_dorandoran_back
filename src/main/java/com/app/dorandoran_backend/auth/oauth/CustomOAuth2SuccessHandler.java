@@ -2,7 +2,7 @@ package com.app.dorandoran_backend.auth.oauth;
 
 import com.app.dorandoran_backend.auth.dto.JwtToken;
 import com.app.dorandoran_backend.auth.jwt.JwtTokenProvider;
-import com.app.dorandoran_backend.mypage.Entity.Members;
+import com.app.dorandoran_backend.mypage.entity.Members;
 import com.app.dorandoran_backend.mypage.repository.MemberRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

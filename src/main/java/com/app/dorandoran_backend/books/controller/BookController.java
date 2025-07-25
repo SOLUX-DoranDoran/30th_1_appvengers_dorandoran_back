@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.dorandoran_backend.home.Entity.Books;
+import com.app.dorandoran_backend.home.entity.Books;
 import com.app.dorandoran_backend.home.repository.BookRepository;
-import com.app.dorandoran_backend.mypage.Entity.Members;
+import com.app.dorandoran_backend.mypage.entity.Members;
 import com.app.dorandoran_backend.mypage.service.MemberService;
 import com.app.dorandoran_backend.reviews.dto.ReviewDto;
 import com.app.dorandoran_backend.reviews.service.ReviewService;
@@ -30,7 +30,7 @@ public class BookController {
 	private final MemberService memberService;
 	private final ReviewService reviewService; 
 	    
-	@GetMapping("/books/bookId}")
+	@GetMapping("/books/{bookId}")
     public ResponseEntity<?> getBook(@PathVariable("bookId") Long bookId) {
         Books book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new RuntimeException("해당 책을 찾을 수 없습니다."));

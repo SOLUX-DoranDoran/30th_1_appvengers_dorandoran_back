@@ -6,10 +6,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.app.dorandoran_backend.mypage.Entity.Members;
+import com.app.dorandoran_backend.mypage.entity.Members;
 import com.app.dorandoran_backend.mypage.service.MemberService;
-import com.app.dorandoran_backend.quotes.Entity.QuotePost;
 import com.app.dorandoran_backend.quotes.dto.QuoteDto;
+import com.app.dorandoran_backend.quotes.entity.QuotePost;
 import com.app.dorandoran_backend.quotes.repository.QuoteRepository;
 import com.app.dorandoran_backend.quotes.service.QuoteService;
 import com.app.dorandoran_backend.quotes.service.QuotesLikeService;

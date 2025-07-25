@@ -1,12 +1,12 @@
 package com.app.dorandoran_backend.reviews.service;
 
-import com.app.dorandoran_backend.home.Entity.Books;
+import com.app.dorandoran_backend.home.entity.Books;
 import com.app.dorandoran_backend.home.repository.BookRepository;
-import com.app.dorandoran_backend.mypage.Entity.Members;
-import com.app.dorandoran_backend.reviews.Entity.ReviewComment;
-import com.app.dorandoran_backend.reviews.Entity.ReviewPost;
+import com.app.dorandoran_backend.mypage.entity.Members;
 import com.app.dorandoran_backend.reviews.dto.ReviewCommentDto;
 import com.app.dorandoran_backend.reviews.dto.ReviewDto;
+import com.app.dorandoran_backend.reviews.entity.ReviewComment;
+import com.app.dorandoran_backend.reviews.entity.ReviewPost;
 import com.app.dorandoran_backend.reviews.repository.ReviewCommentRepository;
 import com.app.dorandoran_backend.reviews.repository.ReviewPostRepository;
 import jakarta.transaction.Transactional;
@@ -89,6 +89,12 @@ public class ReviewService {
         reviewPostRepository.save(review);
 
         return comment.getId();
+    }
+    
+    public Page<ReviewDto> getReviewsByBookId(Long bookId, int page, int size) {
+        Pageable pageable = PageRequest.of(page -1, size, Sort.by(Sort.Direction.DESC, "createdAt"));
+        return reviewPostRepository.findByBookId(bookId, pageable)
+                .map(ReviewDto::from);
     }
 }
 

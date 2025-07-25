@@ -1,8 +1,8 @@
 package com.app.dorandoran_backend.quotes.service;
 
-import com.app.dorandoran_backend.mypage.Entity.Members;
-import com.app.dorandoran_backend.quotes.Entity.QuotePost;
+import com.app.dorandoran_backend.mypage.entity.Members;
 import com.app.dorandoran_backend.quotes.dto.QuoteDto;
+import com.app.dorandoran_backend.quotes.entity.QuotePost;
 import com.app.dorandoran_backend.quotes.repository.QuoteRepository;
 
 import jakarta.transaction.Transactional;

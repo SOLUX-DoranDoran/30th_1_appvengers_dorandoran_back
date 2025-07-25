@@ -1,11 +1,11 @@
 package com.app.dorandoran_backend.reviews.controller;
 
-import com.app.dorandoran_backend.mypage.Entity.Members;
 import com.app.dorandoran_backend.reviews.dto.ReviewCommentDto;
 import com.app.dorandoran_backend.reviews.dto.ReviewCommentRequestDto;
 import com.app.dorandoran_backend.reviews.dto.ReviewDto;
+import com.app.dorandoran_backend.reviews.entity.ReviewPost;
+import com.app.dorandoran_backend.mypage.entity.Members;
 import com.app.dorandoran_backend.mypage.service.MemberService;
-import com.app.dorandoran_backend.reviews.Entity.ReviewPost;
 import com.app.dorandoran_backend.reviews.repository.ReviewPostRepository;
 import com.app.dorandoran_backend.reviews.service.ReviewLikeService;
 import com.app.dorandoran_backend.reviews.service.ReviewService;
@@ -50,6 +50,23 @@ public class ReviewController {
                     "message", e.getMessage()
             ));
         }
+    }
+    
+    @GetMapping("/books/{bookId}/reviews")
+    public ResponseEntity<?> getReviewsByBook(
+            @PathVariable Long bookId,
+            @RequestParam(name = "page", defaultValue = "1") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size) {
+        
+        // 페이징된 ReviewDto 리스트 반환
+        var reviewPage = reviewService.getReviewsByBookId(bookId, page, size);
+
+        return ResponseEntity.ok(Map.of(
+                "reviews", reviewPage.getContent(),
+                "currentPage", reviewPage.getNumber() + 1,  // 0-based 인덱스 보정
+                "totalPages", reviewPage.getTotalPages(),
+                "totalReviews", reviewPage.getTotalElements()
+        ));
     }
 
     @DeleteMapping("/reviews/{reviewId}/like")

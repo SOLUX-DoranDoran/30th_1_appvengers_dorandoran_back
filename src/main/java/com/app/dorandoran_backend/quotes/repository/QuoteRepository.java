@@ -1,9 +1,8 @@
 package com.app.dorandoran_backend.quotes.repository;
 
-import com.app.dorandoran_backend.mypage.Entity.Members;
-//import com.app.dorandoran_backend.quotes.Entity.Quote;
-import com.app.dorandoran_backend.quotes.Entity.QuotePost;
-import com.app.dorandoran_backend.reviews.Entity.ReviewPost;
+import com.app.dorandoran_backend.mypage.entity.Members;
+import com.app.dorandoran_backend.quotes.entity.QuotePost;
+import com.app.dorandoran_backend.reviews.entity.ReviewPost;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

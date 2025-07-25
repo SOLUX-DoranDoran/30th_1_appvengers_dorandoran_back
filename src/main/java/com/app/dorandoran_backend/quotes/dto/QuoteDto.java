@@ -1,10 +1,11 @@
 package com.app.dorandoran_backend.quotes.dto;
 
-import com.app.dorandoran_backend.quotes.Entity.QuotePost;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+
+import com.app.dorandoran_backend.quotes.entity.QuotePost;
 
 @Getter
 @Builder

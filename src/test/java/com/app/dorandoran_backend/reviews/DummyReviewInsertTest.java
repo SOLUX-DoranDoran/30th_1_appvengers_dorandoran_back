@@ -1,10 +1,10 @@
 package com.app.dorandoran_backend.reviews;
 
-import com.app.dorandoran_backend.home.Entity.Books;
+import com.app.dorandoran_backend.home.entity.Books;
 import com.app.dorandoran_backend.home.repository.BookRepository;
-import com.app.dorandoran_backend.mypage.Entity.Members;
+import com.app.dorandoran_backend.mypage.entity.Members;
 import com.app.dorandoran_backend.mypage.repository.MemberRepository;
-import com.app.dorandoran_backend.reviews.Entity.ReviewPost;
+import com.app.dorandoran_backend.reviews.entity.ReviewPost;
 import com.app.dorandoran_backend.reviews.repository.ReviewPostRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

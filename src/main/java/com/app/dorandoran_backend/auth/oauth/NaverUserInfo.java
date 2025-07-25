@@ -1,8 +1,8 @@
 package com.app.dorandoran_backend.auth.oauth;
 
-import com.app.dorandoran_backend.mypage.Entity.Provider;
-
 import java.util.Map;
+
+import com.app.dorandoran_backend.mypage.entity.Provider;
 
 public class NaverUserInfo implements OAuth2UserInfo{
 
