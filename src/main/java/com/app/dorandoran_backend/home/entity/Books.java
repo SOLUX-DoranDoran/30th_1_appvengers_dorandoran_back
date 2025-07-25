@@ -1,4 +1,4 @@
-package com.app.dorandoran_backend.home.Entity;
+package com.app.dorandoran_backend.home.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

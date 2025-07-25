@@ -1,6 +1,6 @@
 package com.app.dorandoran_backend.auth.oauth;
 
-import com.app.dorandoran_backend.mypage.Entity.Provider;
+import com.app.dorandoran_backend.mypage.entity.Provider;
 
 public interface OAuth2UserInfo {
     String getProviderId();

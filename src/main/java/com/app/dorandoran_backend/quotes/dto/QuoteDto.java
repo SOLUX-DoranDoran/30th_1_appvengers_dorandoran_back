@@ -1,6 +1,6 @@
 package com.app.dorandoran_backend.quotes.dto;
 
-import com.app.dorandoran_backend.quotes.Entity.Quote;
+import com.app.dorandoran_backend.quotes.entity.Quote;
 import lombok.Builder;
 
 import java.time.LocalDateTime;

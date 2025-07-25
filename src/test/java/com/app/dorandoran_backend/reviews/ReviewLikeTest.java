@@ -1,12 +1,12 @@
 package com.app.dorandoran_backend.reviews;
 
-import com.app.dorandoran_backend.home.Entity.Books;
+import com.app.dorandoran_backend.home.entity.Books;
 import com.app.dorandoran_backend.home.repository.BookRepository;
-import com.app.dorandoran_backend.mypage.Entity.Members;
+import com.app.dorandoran_backend.mypage.entity.Members;
 import com.app.dorandoran_backend.mypage.repository.MemberRepository;
-import com.app.dorandoran_backend.reviews.Entity.ReviewLike;
-import com.app.dorandoran_backend.reviews.Entity.ReviewLikeId;
-import com.app.dorandoran_backend.reviews.Entity.ReviewPost;
+import com.app.dorandoran_backend.reviews.entity.ReviewLike;
+import com.app.dorandoran_backend.reviews.entity.ReviewLikeId;
+import com.app.dorandoran_backend.reviews.entity.ReviewPost;
 import com.app.dorandoran_backend.reviews.repository.ReviewLikeRepository;
 import com.app.dorandoran_backend.reviews.repository.ReviewPostRepository;
 import jakarta.transaction.Transactional;
@@ -21,7 +21,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import static com.app.dorandoran_backend.mypage.Entity.Provider.GOOGLE;
+import static com.app.dorandoran_backend.mypage.entity.Provider.GOOGLE;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest

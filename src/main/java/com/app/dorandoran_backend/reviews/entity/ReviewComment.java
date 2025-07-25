@@ -1,6 +1,6 @@
-package com.app.dorandoran_backend.reviews.Entity;
+package com.app.dorandoran_backend.reviews.entity;
 
-import com.app.dorandoran_backend.mypage.Entity.Members;
+import com.app.dorandoran_backend.mypage.entity.Members;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;

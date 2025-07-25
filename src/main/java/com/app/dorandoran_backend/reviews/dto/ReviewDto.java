@@ -1,6 +1,6 @@
 package com.app.dorandoran_backend.reviews.dto;
 
-import com.app.dorandoran_backend.reviews.Entity.ReviewPost;
+import com.app.dorandoran_backend.reviews.entity.ReviewPost;
 import lombok.Builder;
 import lombok.Getter;
 

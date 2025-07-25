@@ -1,8 +1,8 @@
 package com.app.dorandoran_backend.quotes;
 
-import com.app.dorandoran_backend.mypage.Entity.Members;
+import com.app.dorandoran_backend.mypage.entity.Members;
 import com.app.dorandoran_backend.mypage.repository.MemberRepository;
-import com.app.dorandoran_backend.quotes.Entity.Quote;
+import com.app.dorandoran_backend.quotes.entity.Quote;
 import com.app.dorandoran_backend.quotes.repository.QuoteRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

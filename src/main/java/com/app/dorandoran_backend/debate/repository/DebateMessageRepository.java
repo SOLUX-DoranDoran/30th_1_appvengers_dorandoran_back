@@ -1,6 +1,6 @@
 package com.app.dorandoran_backend.debate.repository;
 
-import com.app.dorandoran_backend.debate.Entity.DebateMessage;
+import com.app.dorandoran_backend.debate.entity.DebateMessage;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
