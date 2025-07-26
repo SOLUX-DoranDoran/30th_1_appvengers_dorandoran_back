@@ -26,28 +26,22 @@ public class QuotePost {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // 글귀 ID
+    private Long id;
 
-    // 작성자(회원) - NOT NULL, ManyToOne
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
-    private Members member; // 유저 ID
-    
-    @Column(name = "book_name", nullable = false)
-    private String bookName;
+    private Members member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "book_id", nullable = false)
-    private Books book; // 리뷰 대상 도서 ID
+    @JoinColumn(name = "book_name", nullable = false)
+    private Books book;
 
     @Column(nullable = false, columnDefinition = "TEXT")
-    private String content; // 글귀 내용
+    private String content;
 
     @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt; // 작성 일시
+    private LocalDateTime createdAt;
 
     @Column(name = "like_count", nullable = false)
-    private int likeCount = 0; // 좋아요 수
-
+    private int likeCount = 0;
 }
-

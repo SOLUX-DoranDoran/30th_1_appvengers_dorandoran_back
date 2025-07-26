@@ -57,7 +57,6 @@ public class QuoteService {
         quotePost.setContent(quoteDto.getContent());
         quotePost.setMember(member);
         quotePost.setBook(book);
-        quotePost.setBookName(book.getTitle());
         quotePost.setCreatedAt(LocalDateTime.now());
         quotePost.setLikeCount(0);
 
