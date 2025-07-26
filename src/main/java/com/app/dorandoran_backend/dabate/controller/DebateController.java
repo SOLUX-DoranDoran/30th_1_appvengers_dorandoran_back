@@ -3,6 +3,7 @@ package com.app.dorandoran_backend.dabate.controller;
 import com.app.dorandoran_backend.debate.service.DebateService;
 import com.app.dorandoran_backend.debate.dto.CommentCreateDto;
 import com.app.dorandoran_backend.debate.dto.CommentDto;
+import com.app.dorandoran_backend.debate.dto.DebateCreateDto;
 import com.app.dorandoran_backend.debate.dto.DebateDto;
 import com.app.dorandoran_backend.debate.service.CommentService;
 
@@ -23,6 +24,13 @@ public class DebateController {
     private final DebateService boardService;
     private final CommentService commentService;
 
+ // 토론방 개설
+    @PostMapping("/boards")
+    public ResponseEntity<DebateDto> createBoard(@Valid @RequestBody DebateCreateDto dto) {
+        DebateDto createdBoard = boardService.createBoard(dto);
+        return ResponseEntity.status(201).body(createdBoard);
+    }
+    
     // 전체 토론 목록 조회
     @GetMapping("/boards")
     public ResponseEntity<Page<DebateDto>> getAllBoards(

@@ -14,6 +14,6 @@ public class DebateCreateDto {
     @NotBlank(message = "의견 내용을 입력해주세요.")
     private String content; // 의견
     
-    @NotBlank(message = "책제목을 입력해주세.")
+    @NotBlank(message = "책제목을 입력해주세요.")
     private Long bookId;
 }
