@@ -27,7 +27,6 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
     private static final List<String> EXCLUDED_PATHS = List.of(
             "/",
             "/favicon.ico",
-            "/api/auth/test",
             "/api/auth/reissue",
             "/api/auth/oauth/google",
             "/api/auth/oauth/naver",
