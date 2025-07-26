@@ -4,10 +4,7 @@ import com.app.dorandoran_backend.mypage.entity.Members;
 import com.app.dorandoran_backend.reviews.entity.ReviewLike;
 import com.app.dorandoran_backend.reviews.entity.ReviewLikeId;
 import com.app.dorandoran_backend.reviews.entity.ReviewPost;
-<<<<<<< HEAD
 
-=======
->>>>>>> main
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -1,6 +1,4 @@
 package com.app.dorandoran_backend.quotes.entity;
-
-<<<<<<<< HEAD:src/main/java/com/app/dorandoran_backend/quotes/entity/QuotePost.java
 import java.time.LocalDateTime;
 
 import com.app.dorandoran_backend.home.entity.Books;
@@ -15,10 +13,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-========
-import com.app.dorandoran_backend.mypage.entity.Members;
-import jakarta.persistence.*;
->>>>>>>> main:src/main/java/com/app/dorandoran_backend/quotes/entity/Quote.java
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

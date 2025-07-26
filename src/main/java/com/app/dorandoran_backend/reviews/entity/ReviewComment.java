@@ -1,9 +1,7 @@
 package com.app.dorandoran_backend.reviews.entity;
 
-<<<<<<< HEAD
-=======
 import com.app.dorandoran_backend.mypage.entity.Members;
->>>>>>> main
+
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,8 +9,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-
-import com.app.dorandoran_backend.mypage.entity.Members;
 
 @Entity
 @Table(name = "comments")

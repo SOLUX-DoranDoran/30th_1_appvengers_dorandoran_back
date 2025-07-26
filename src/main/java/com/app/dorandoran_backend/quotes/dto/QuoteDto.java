@@ -11,6 +11,7 @@ import com.app.dorandoran_backend.quotes.entity.QuotePost;
 @Builder
 public class QuoteDto {
     private Long id;
+    private Long bookId; 
     private String bookTitle;
     private String coverImageUrl;
     private String content;

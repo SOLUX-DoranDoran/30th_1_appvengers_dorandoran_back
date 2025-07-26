@@ -1,19 +1,10 @@
 package com.app.dorandoran_backend.quotes.repository;
 
-<<<<<<< HEAD
 import com.app.dorandoran_backend.mypage.entity.Members;
 import com.app.dorandoran_backend.quotes.entity.QuoteLike;
 import com.app.dorandoran_backend.quotes.entity.QuoteLikeId;
 import com.app.dorandoran_backend.quotes.entity.QuotePost;
-import com.app.dorandoran_backend.reviews.entity.ReviewLike;
-import com.app.dorandoran_backend.reviews.entity.ReviewPost;
-
 import java.util.Optional;
-
-=======
-import com.app.dorandoran_backend.quotes.entity.QuoteLike;
-import com.app.dorandoran_backend.quotes.entity.QuoteLikeId;
->>>>>>> main
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface QuoteLikeRepository extends JpaRepository<QuoteLike, QuoteLikeId> {

@@ -1,15 +1,10 @@
 package com.app.dorandoran_backend.reviews.dto;
 
-<<<<<<< HEAD
-=======
 import com.app.dorandoran_backend.reviews.entity.ReviewComment;
->>>>>>> main
 import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
-
-import com.app.dorandoran_backend.reviews.entity.ReviewComment;
 
 @Getter
 @Builder

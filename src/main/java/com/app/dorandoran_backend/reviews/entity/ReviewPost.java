@@ -1,14 +1,9 @@
 package com.app.dorandoran_backend.reviews.entity;
-<<<<<<< HEAD
+
 
 import com.app.dorandoran_backend.home.entity.Books;
 import com.app.dorandoran_backend.mypage.entity.Members;
 
-=======
-
-import com.app.dorandoran_backend.home.entity.Books;
-import com.app.dorandoran_backend.mypage.entity.Members;
->>>>>>> main
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

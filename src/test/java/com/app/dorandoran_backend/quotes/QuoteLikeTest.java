@@ -1,6 +1,5 @@
 package com.app.dorandoran_backend.quotes;
 
-<<<<<<< HEAD
 import com.app.dorandoran_backend.home.entity.Books;
 import com.app.dorandoran_backend.home.repository.BookRepository;
 import com.app.dorandoran_backend.mypage.entity.Members;
@@ -8,13 +7,6 @@ import com.app.dorandoran_backend.mypage.repository.MemberRepository;
 import com.app.dorandoran_backend.quotes.entity.QuoteLike;
 import com.app.dorandoran_backend.quotes.entity.QuoteLikeId;
 import com.app.dorandoran_backend.quotes.entity.QuotePost;
-=======
-import com.app.dorandoran_backend.mypage.entity.Members;
-import com.app.dorandoran_backend.mypage.repository.MemberRepository;
-import com.app.dorandoran_backend.quotes.entity.Quote;
-import com.app.dorandoran_backend.quotes.entity.QuoteLike;
-import com.app.dorandoran_backend.quotes.entity.QuoteLikeId;
->>>>>>> main
 import com.app.dorandoran_backend.quotes.repository.QuoteLikeRepository;
 import com.app.dorandoran_backend.quotes.repository.QuoteRepository;
 import jakarta.transaction.Transactional;

@@ -68,7 +68,7 @@ public class QuotesController {
         	quoteLikeService.unlikeQuote(member, quote);
             return ResponseEntity.ok(Map.of(
                     "success", true,
-                    "message", "리뷰 좋아요가 취소되었습니다.",
+                    "message", "명언 좋아요가 취소되었습니다.",
                     "likeCount", quote.getLikeCount()
             ));
         } catch (RuntimeException e) {
@@ -78,7 +78,16 @@ public class QuotesController {
             ));
         }
     }
-
+    
+    @PostMapping("/quotes")
+    public ResponseEntity<?> createQuote(@Valid @RequestBody QuoteDto quoteDto) {
+        Members member = memberService.getCurrentMember();  // 로그인된 회원 정보 조회
+        Long quoteId = quoteService.createQuote(member, quoteDto);
+        return ResponseEntity.ok(Map.of(
+            "message", "명언이 성공적으로 등록되었습니다.",
+            "quoteId", quoteId
+        ));
+    }
     @GetMapping("/quotes")
     public ResponseEntity<?> getRecentQuotes(
             @RequestParam(name = "sort", required = false, defaultValue = "recent") String sort,

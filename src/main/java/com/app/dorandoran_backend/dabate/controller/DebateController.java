@@ -23,8 +23,6 @@ public class DebateController {
     private final DebateService boardService;
     private final CommentService commentService;
 
-    // --- Board (토론) 관련 ---
-
     // 전체 토론 목록 조회
     @GetMapping("/boards")
     public ResponseEntity<Page<DebateDto>> getAllBoards(

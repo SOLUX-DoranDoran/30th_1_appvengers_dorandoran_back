@@ -53,6 +53,10 @@ spring:
   config:
     import: optional:file:.env[.properties]
 
+logging:
+  level:
+    org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: TRACE
+
 jwt:
   secret: ${JWT_SECRET}
 
