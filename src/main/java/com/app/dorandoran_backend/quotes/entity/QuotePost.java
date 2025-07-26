@@ -32,6 +32,9 @@ public class QuotePost {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
     private Members member; // 유저 ID
+    
+    @Column(name = "book_name", nullable = false)
+    private String bookName;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id", nullable = false)

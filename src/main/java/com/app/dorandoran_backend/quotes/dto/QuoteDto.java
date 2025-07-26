@@ -22,6 +22,7 @@ public class QuoteDto {
     public static QuoteDto from(QuotePost quote) {
         return QuoteDto.builder()
                 .id(quote.getId())
+                .bookId(quote.getBook().getId()) 
                 .bookTitle(quote.getBook().getTitle())
                 .coverImageUrl(quote.getBook().getCoverImageUrl())
                 .content(quote.getContent())

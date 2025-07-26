@@ -44,8 +44,8 @@ public class BookController {
     }
 	
 	@PostMapping("/books/{bookid}/reviews")
-    public ResponseEntity<?> writeReview(@PathVariable("bookid") Long bookId,
-                                         @Valid @RequestBody ReviewDto reviewDto) {
+	public ResponseEntity<?> writeReview(@PathVariable("bookId") Long bookId, 
+    		@Valid @RequestBody ReviewDto reviewDto) {
        
 		Members member = memberService.getCurrentMember();
         reviewDto.setBookId(bookId);

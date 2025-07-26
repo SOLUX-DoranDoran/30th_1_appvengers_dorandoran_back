@@ -35,9 +35,10 @@ public class DebateService {
                 .member(member)
                 .createdAt(LocalDateTime.now());
 
-        if (dto.getBookId() != null) {
-            Books book = bookRepository.findById(dto.getBookId())
-                    .orElseThrow(() -> new RuntimeException("해당 도서를 찾을 수 없습니다."));
+        // 책 제목으로 책 찾기
+        if (dto.getBookTitle() != null && !dto.getBookTitle().isBlank()) {
+            Books book = bookRepository.findByTitle(dto.getBookTitle())
+                    .orElseThrow(() -> new RuntimeException("해당 제목의 도서를 찾을 수 없습니다."));
             builder.book(book);
         }
 
@@ -46,6 +47,7 @@ public class DebateService {
 
         return DebateDto.from(debateRoom);
     }
+
 
     // 전체 토론 목록 조회
     public Page<DebateDto> getAllBoards(int page, int size) {
