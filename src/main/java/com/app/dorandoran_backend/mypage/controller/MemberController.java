@@ -1,4 +1,4 @@
-/*package com.app.dorandoran_backend.mypage.controller;
+package com.app.dorandoran_backend.mypage.controller;
 
 import com.app.dorandoran_backend.mypage.entity.Members;
 import com.app.dorandoran_backend.mypage.dto.MemberResponseDto;
@@ -71,4 +71,4 @@ public class MemberController {
         return ResponseEntity.ok(quotes);
     }
 }
-*/
+

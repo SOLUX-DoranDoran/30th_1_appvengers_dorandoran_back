@@ -54,8 +54,8 @@ public class ReviewService {
     
     @Transactional
     public Long createReview(Members member, ReviewDto dto) {
-    	
-    	Books book = bookRepository.findByTitle(dto.getBookTitle())
+
+        Books book = bookRepository.findById(dto.getBookId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 책이 없습니다"));
     	
         ReviewPost review = ReviewPost.builder()

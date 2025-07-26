@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Getter
 @Builder
 public class DebateDto {
-    private Long id;
+    private Long boardId;
     private Long bookId;
     private Long memberId;
     private String title;
@@ -19,7 +19,7 @@ public class DebateDto {
     // Entity → DTO 변환용 정적 팩토리 메서드
     public static DebateDto from(DebateRoom debateRoom) {
         return DebateDto.builder()
-                .id(debateRoom.getId())
+                .boardId(debateRoom.getId())
                 .bookId(debateRoom.getBook() != null ? debateRoom.getBook().getId() : null)
                 .memberId(debateRoom.getMember() != null ? debateRoom.getMember().getId() : null)
                 .title(debateRoom.getTitle())

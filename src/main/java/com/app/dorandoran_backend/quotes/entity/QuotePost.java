@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "quotes")
+@Table(name = "quote")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -33,8 +33,11 @@ public class QuotePost {
     private Members member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "book_name", nullable = false)
+    @JoinColumn(name = "book_id", nullable = false)
     private Books book;
+
+    @Column(name = "book_name")
+    private String bookName;
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;

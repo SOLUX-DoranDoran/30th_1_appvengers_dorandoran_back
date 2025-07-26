@@ -1,4 +1,4 @@
-package com.app.dorandoran_backend.dabate.controller;
+package com.app.dorandoran_backend.debate.controller;
 
 import com.app.dorandoran_backend.debate.service.DebateService;
 import com.app.dorandoran_backend.debate.dto.CommentCreateDto;

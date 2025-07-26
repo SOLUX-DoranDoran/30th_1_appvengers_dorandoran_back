@@ -2,7 +2,6 @@ package com.app.dorandoran_backend.debate.service;
 
 import com.app.dorandoran_backend.debate.entity.DebateRoom;
 import com.app.dorandoran_backend.debate.entity.DebateComments;
-import com.app.dorandoran_backend.debate.entity.DebateComments.DebateCommentsBuilder;
 import com.app.dorandoran_backend.debate.dto.CommentCreateDto;
 import com.app.dorandoran_backend.debate.dto.CommentDto;
 import com.app.dorandoran_backend.debate.repository.DebateCommentsRepository;
@@ -11,6 +10,7 @@ import com.app.dorandoran_backend.mypage.entity.Members;
 import com.app.dorandoran_backend.mypage.service.MemberService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class CommentService {
 
     private final DebateCommentsRepository commentRepository;
@@ -37,6 +38,7 @@ public class CommentService {
         	    .content(dto.getContent())
         	    .updatedAt(LocalDateTime.now());
 
+        log.info("Saving comment: roomId={}, memberId={}, content={}", room.getId(), member.getId(), dto.getContent());
 
         if (dto.getParentId() != null) {
             DebateComments parentComment = commentRepository.findById(dto.getParentId())

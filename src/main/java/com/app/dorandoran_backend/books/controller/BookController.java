@@ -43,7 +43,7 @@ public class BookController {
         return ResponseEntity.ok(books);
     }
 	
-	@PostMapping("/books/{bookid}/reviews")
+	@PostMapping("/books/{bookId}/reviews")
 	public ResponseEntity<?> writeReview(@PathVariable("bookId") Long bookId, 
     		@Valid @RequestBody ReviewDto reviewDto) {
        
