@@ -45,7 +45,6 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/",
                                 "/favicon.ico",
-                                "/api/auth/test",
                                 "/api/auth/reissue",
                                 "/api/auth/oauth/naver",
                                 "/api/auth/oauth/google",
