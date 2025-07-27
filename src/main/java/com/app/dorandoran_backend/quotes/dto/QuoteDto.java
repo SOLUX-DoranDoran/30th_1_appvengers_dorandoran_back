@@ -1,25 +1,35 @@
 package com.app.dorandoran_backend.quotes.dto;
 
-import com.app.dorandoran_backend.quotes.Entity.Quote;
 import lombok.Builder;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 
+import com.app.dorandoran_backend.quotes.entity.QuotePost;
+
+@Getter
 @Builder
-public record QuoteDto(
-        Long id,
-        String bookName,
-        String content,
-        LocalDateTime createdAt,
-        int likeCount
-) {
-    public static QuoteDto from(Quote quote) {
+public class QuoteDto {
+    private Long id;
+    private Long bookId; 
+    private String bookTitle;
+    private String coverImageUrl;
+    private String content;
+    private LocalDateTime createdAt;
+    private String nickname;
+    private String profileImage;
+
+    public static QuoteDto from(QuotePost quote) {
         return QuoteDto.builder()
                 .id(quote.getId())
-                .bookName(quote.getBookName())
+                .bookId(quote.getBook().getId()) 
+                .bookTitle(quote.getBook().getTitle())
+                .coverImageUrl(quote.getBook().getCoverImageUrl())
                 .content(quote.getContent())
                 .createdAt(quote.getCreatedAt())
-                .likeCount(quote.getLikeCount())
+                .nickname(quote.getMember().getNickname())
+                .profileImage(quote.getMember().getProfileImage())
                 .build();
     }
 }
+

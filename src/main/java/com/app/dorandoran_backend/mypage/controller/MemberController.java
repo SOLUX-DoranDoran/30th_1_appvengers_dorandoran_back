@@ -1,6 +1,6 @@
 package com.app.dorandoran_backend.mypage.controller;
 
-import com.app.dorandoran_backend.mypage.Entity.Members;
+import com.app.dorandoran_backend.mypage.entity.Members;
 import com.app.dorandoran_backend.mypage.dto.MemberResponseDto;
 import com.app.dorandoran_backend.mypage.dto.StorageImgResponseDto;
 import com.app.dorandoran_backend.mypage.service.*;
@@ -19,15 +19,15 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class MemberController {
 
-    private final MemberService memberService;
-    private final MemberProfileService memberProfileService;
+   private final MemberService memberService;
+   private final MemberProfileService memberProfileService;
     private final MemberReviewService memberReviewService;
     private final MemberQuoteService memberQuoteService;
 
     @GetMapping("/me")
     public ResponseEntity<MemberResponseDto> getMyPageInfo() {
         Members member = memberService.getCurrentMember();
-        return ResponseEntity.ok(MemberResponseDto.from(member));
+       return ResponseEntity.ok(MemberResponseDto.from(member));
     }
 
     @PostMapping("/me/profile_image")
@@ -71,3 +71,4 @@ public class MemberController {
         return ResponseEntity.ok(quotes);
     }
 }
+

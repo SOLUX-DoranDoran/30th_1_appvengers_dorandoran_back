@@ -1,8 +1,10 @@
 package com.app.dorandoran_backend.reviews.service;
 
-import com.app.dorandoran_backend.mypage.Entity.Members;
-import com.app.dorandoran_backend.reviews.Entity.ReviewComment;
-import com.app.dorandoran_backend.reviews.Entity.ReviewPost;
+import com.app.dorandoran_backend.home.entity.Books;
+import com.app.dorandoran_backend.home.repository.BookRepository;
+import com.app.dorandoran_backend.mypage.entity.Members;
+import com.app.dorandoran_backend.reviews.entity.ReviewComment;
+import com.app.dorandoran_backend.reviews.entity.ReviewPost;
 import com.app.dorandoran_backend.reviews.dto.ReviewCommentDto;
 import com.app.dorandoran_backend.reviews.dto.ReviewDto;
 import com.app.dorandoran_backend.reviews.repository.ReviewCommentRepository;
@@ -24,6 +26,7 @@ public class ReviewService {
 
     private final ReviewPostRepository reviewPostRepository;
     private final ReviewCommentRepository reviewCommentRepository;
+    private final BookRepository bookRepository;
 
     public ReviewDto getReviewById(Long reviewId) {
         ReviewPost review = reviewPostRepository.findById(reviewId)
@@ -48,6 +51,26 @@ public class ReviewService {
         return reviewCommentRepository.findAllByReview(review, pageable)
                 .map(ReviewCommentDto::from);
     }
+    
+    @Transactional
+    public Long createReview(Members member, ReviewDto dto) {
+
+        Books book = bookRepository.findById(dto.getBookId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 책이 없습니다"));
+    	
+        ReviewPost review = ReviewPost.builder()
+                .member(member)
+                .book(book)
+                .content(dto.getContent())
+                .rating(dto.getRating())
+                .createdAt(LocalDateTime.now())
+                .commentCount(0)
+                .likeCount(0)
+                .build();
+
+        reviewPostRepository.save(review);
+        return review.getId();
+    }
 
     @Transactional
     public Long createComment(Members member, Long reviewId, String content) {
@@ -66,6 +89,12 @@ public class ReviewService {
         reviewPostRepository.save(review);
 
         return comment.getId();
+    }
+    
+    public Page<ReviewDto> getReviewsByBookId(Long bookId, int page, int size) {
+        Pageable pageable = PageRequest.of(page -1, size, Sort.by(Sort.Direction.DESC, "createdAt"));
+        return reviewPostRepository.findByBookId(bookId, pageable)
+                .map(ReviewDto::from);
     }
 }
 

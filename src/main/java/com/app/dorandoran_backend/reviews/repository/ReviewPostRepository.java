@@ -1,7 +1,7 @@
 package com.app.dorandoran_backend.reviews.repository;
 
-import com.app.dorandoran_backend.mypage.Entity.Members;
-import com.app.dorandoran_backend.reviews.Entity.ReviewPost;
+import com.app.dorandoran_backend.mypage.entity.Members;
+import com.app.dorandoran_backend.reviews.entity.ReviewPost;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,4 +12,5 @@ public interface ReviewPostRepository extends JpaRepository<ReviewPost, Long> {
     List<ReviewPost> findByMemberOrderByCreatedAtDesc(Members member);
     Page<ReviewPost> findAll(Pageable pageable);
     List<ReviewPost> findByMember(Members member);
+    Page<ReviewPost> findByBookId(Long bookId, Pageable pageable);
 }
