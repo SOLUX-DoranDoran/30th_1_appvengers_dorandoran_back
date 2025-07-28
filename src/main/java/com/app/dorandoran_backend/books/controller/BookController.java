@@ -55,4 +55,10 @@ public class BookController {
             "reviewId", reviewId
         ));
     }
+	 @GetMapping("/books/recommendations")
+	    public ResponseEntity<?> getRecommendedBooks() {
+	        List<Long> recommendedIds = List.of(1L, 2L, 3L);
+	        List<Books> recommendedBooks = bookRepository.findAllById(recommendedIds);
+	        return ResponseEntity.ok(recommendedBooks);
+	    }
 }
