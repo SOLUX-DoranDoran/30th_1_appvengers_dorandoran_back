@@ -13,7 +13,7 @@ server:
 
 spring:
   profiles:
-    active: aws  # local(로컬 환경) test(웹 서버 환경) aws(서버 배포)
+    active: aws  # local(로컬 환경) test(웹 서버 환경) aws(서버 배포 환경)
   security:
     oauth2:
       client:
