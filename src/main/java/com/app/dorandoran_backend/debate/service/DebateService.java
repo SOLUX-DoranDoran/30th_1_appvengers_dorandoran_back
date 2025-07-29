@@ -2,11 +2,10 @@ package com.app.dorandoran_backend.debate.service;
 
 import com.app.dorandoran_backend.debate.dto.DebateCreateDto;
 import com.app.dorandoran_backend.debate.dto.DebateDto;
-import com.app.dorandoran_backend.debate.entity.DebateMessage;
 import com.app.dorandoran_backend.debate.entity.DebateRoom;
 import com.app.dorandoran_backend.debate.repository.DebateRoomRepository;
-import com.app.dorandoran_backend.home.entity.Books;
-import com.app.dorandoran_backend.home.repository.BookRepository;
+import com.app.dorandoran_backend.books.entity.Books;
+import com.app.dorandoran_backend.books.repository.BookRepository;
 import com.app.dorandoran_backend.mypage.entity.Members;
 import com.app.dorandoran_backend.mypage.service.MemberService;
 import jakarta.transaction.Transactional;
