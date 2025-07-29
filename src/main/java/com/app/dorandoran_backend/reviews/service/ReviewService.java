@@ -1,7 +1,7 @@
 package com.app.dorandoran_backend.reviews.service;
 
-import com.app.dorandoran_backend.home.entity.Books;
-import com.app.dorandoran_backend.home.repository.BookRepository;
+import com.app.dorandoran_backend.books.entity.Books;
+import com.app.dorandoran_backend.books.repository.BookRepository;
 import com.app.dorandoran_backend.mypage.entity.Members;
 import com.app.dorandoran_backend.reviews.entity.ReviewComment;
 import com.app.dorandoran_backend.reviews.entity.ReviewPost;

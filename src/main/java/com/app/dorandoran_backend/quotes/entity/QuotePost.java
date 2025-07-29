@@ -1,7 +1,7 @@
 package com.app.dorandoran_backend.quotes.entity;
 import java.time.LocalDateTime;
 
-import com.app.dorandoran_backend.home.entity.Books;
+import com.app.dorandoran_backend.books.entity.Books;
 import com.app.dorandoran_backend.mypage.entity.Members;
 
 import jakarta.persistence.Column;

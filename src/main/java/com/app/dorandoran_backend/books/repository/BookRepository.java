@@ -1,6 +1,6 @@
-package com.app.dorandoran_backend.home.repository;
+package com.app.dorandoran_backend.books.repository;
 
-import com.app.dorandoran_backend.home.entity.Books;
+import com.app.dorandoran_backend.books.entity.Books;
 
 import java.util.Optional;
 

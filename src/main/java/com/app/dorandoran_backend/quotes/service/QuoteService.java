@@ -1,7 +1,7 @@
 package com.app.dorandoran_backend.quotes.service;
 
-import com.app.dorandoran_backend.home.entity.Books;
-import com.app.dorandoran_backend.home.repository.BookRepository;
+import com.app.dorandoran_backend.books.entity.Books;
+import com.app.dorandoran_backend.books.repository.BookRepository;
 import com.app.dorandoran_backend.mypage.entity.Members;
 import com.app.dorandoran_backend.quotes.dto.QuoteDto;
 import com.app.dorandoran_backend.quotes.entity.QuotePost;
@@ -9,7 +9,6 @@ import com.app.dorandoran_backend.quotes.repository.QuoteRepository;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
