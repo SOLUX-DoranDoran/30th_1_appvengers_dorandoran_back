@@ -11,7 +11,10 @@
 | 이름  | 역할분담 |
 |-----| ------ |
 | <a href="https://github.com/Eunbin618">장은빈</a> |홈·리뷰·감성 글귀|
-| <a href="https://github.com/dmseong">김성희</a> |로그인·리뷰·마이페이지|
+| <a href="https://github.com/dmseong">김성희</a> |로그인·리뷰·마이페이지·aws 서버|
+
+## 파이프라인 구조
+<img width="1900" height="800" alt="제목을-입력해주세요_-001" src="https://github.com/user-attachments/assets/db2d81f6-f581-4fc7-a361-928732861884" />
 
 ## 프로젝트 구조
 ```
