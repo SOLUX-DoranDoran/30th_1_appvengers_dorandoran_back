@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Builder
 public class ReviewCommentDto {
     private Long id;
+    private String parentCommentNickname;
     private String nickname;
     private String profileImage;
     private String content;
@@ -18,6 +19,7 @@ public class ReviewCommentDto {
     public static ReviewCommentDto from(ReviewComment comment) {
         return ReviewCommentDto.builder()
                 .id(comment.getId())
+                .parentCommentNickname(comment.getReview().getMember().getNickname())
                 .nickname(comment.getMember().getNickname())
                 .profileImage(comment.getMember().getProfileImage())
                 .content(comment.getContent())
