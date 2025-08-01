@@ -7,13 +7,11 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-import com.app.dorandoran_backend.reviews.entity.ReviewPost;
-
 @Getter
 @Setter
 @Builder
 public class ReviewDto {
-    private Long id;
+    private Long reviewId;
     private Long bookId;
     private String bookTitle;
     private String coverImageUrl;
@@ -25,7 +23,8 @@ public class ReviewDto {
 
     public static ReviewDto from(ReviewPost review) {
         return ReviewDto.builder()
-                .id(review.getId())
+                .reviewId(review.getId())
+                .bookId(review.getBook().getId())
                 .bookTitle(review.getBook().getTitle())
                 .coverImageUrl(review.getBook().getCoverImageUrl())
                 .content(review.getContent())
