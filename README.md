@@ -62,7 +62,7 @@
 └─resources
     ├─static 
     ├─templates
-    └─application.yml
-    └─application-local.yml
+    ├─application.yml
+    ├─application-local.yml
     └─application-test.yml
 ``` 
