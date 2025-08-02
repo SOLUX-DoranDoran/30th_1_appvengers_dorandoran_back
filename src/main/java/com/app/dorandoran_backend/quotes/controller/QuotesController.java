@@ -2,7 +2,6 @@ package com.app.dorandoran_backend.quotes.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +26,7 @@ public class QuotesController {
     private final QuotesLikeService quoteLikeService;
     private final QuoteService quoteService;
 
-    @GetMapping("/quots/{quoteId}")
+    @GetMapping("/quotes/{quoteId}")
     public ResponseEntity<?> review(@PathVariable("quoteId") Long quoteId) {
         return ResponseEntity.ok(quoteService.getQuoteById(quoteId));
     }
@@ -85,7 +84,8 @@ public class QuotesController {
         Long quoteId = quoteService.createQuote(member, quoteDto);
         return ResponseEntity.ok(Map.of(
             "message", "명언이 성공적으로 등록되었습니다.",
-            "quoteId", quoteId
+            "quoteId", quoteId,
+                "bookId", quoteDto.getBookId()
         ));
     }
     @GetMapping("/quotes")
